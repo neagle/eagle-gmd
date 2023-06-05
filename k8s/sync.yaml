@@ -71,6 +71,13 @@ spec:
             configMapKeyRef:
               name: greymatter-sync-config
               key: GREYMATTER_GIT_REMOTE
+        - name: GREYMATTER_SSH_PASSPHRASE
+          valueFrom:
+            secretKeyRef:
+              name: sync-ssh-passphrase
+              key: passphrase
+              optional: true
+
 
 ---
 apiVersion: v1
