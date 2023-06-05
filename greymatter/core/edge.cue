@@ -16,21 +16,20 @@ Edge: gsl.#Edge & {
 	// to your service definitions.
 	context: Edge.#NewContext & globals
 
-	name:              "edge"
-	display_name:      "Eagle Gmd Edge"
-	version:           "v1.8.1"
-	description:       "Edge ingress for eagle-gmd"
-	business_impact:   "high"
-	owner:             "Eagle Gmd"
-	capability:        ""
-	
+	name:            "edge"
+	display_name:    "Eagle GMD Edge"
+	version:         "v1.8.1"
+	description:     "Edge ingress for eagle-gmd"
+	business_impact: "high"
+	owner:           "Nate Eagle"
+	capability:      ""
+
 	ingress: {
 		// Edge -> HTTP ingress to your container
 		(name): {
 			gsl.#HTTPListener
-			
-			port: 10809
-				
+
+			port: 10908
 		}
 	}
 }
