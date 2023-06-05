@@ -87,4 +87,4 @@ metadata:
   namespace: eagle-gmd
 data:
   # property-like keys; each key maps to a simple value
-  GREYMATTER_GIT_REMOTE: "neagle/eagle-gmd"
+  GREYMATTER_GIT_REMOTE: "git@github.com:neagle/eagle-gmd.git"
