@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge
+  namespace: eagle-gmd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      greymatter.io/cluster: eagle-gmd-edge
+  template:
+    metadata:
+      labels:
+        greymatter.io/cluster: eagle-gmd-edge
+    spec:
+      containers:
+        - name: sidecar
+          image: greymatter.jfrog.io/oci/greymatter-proxy:1.9.1-alpha
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 10809
+            name: ingress
+          - containerPort: 8082
+            name: stats
+          env:
+            - name: XDS_CLUSTER
+              value: eagle-gmd-edge
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: /dev/stdout
+            - name: ENVOY_ADMIN_PORT
+              value: "8002"
+            - name: PROXY_DYNAMIC
+              value: "true"
+            - name: XDS_ZONE
+              value: default-zone
+            - name: XDS_HOST
+              value: controlensemble.greymatter.svc.cluster.local
+            - name: XDS_PORT
+              value: "50000"
+          resources:
+            limits:
+              cpu: 200m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+      imagePullSecrets:
+      - name: greymatter-image-pull
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge
+  namespace: eagle-gmd
+spec:
+  ports:
+  - name: ingress
+    port: 10809
+    protocol: TCP
+    targetPort: 10809
+  selector:
+    greymatter.io/cluster: eagle-gmd-edge
+  type: LoadBalancer
+
