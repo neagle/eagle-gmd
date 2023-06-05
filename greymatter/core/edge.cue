@@ -25,9 +25,9 @@ Edge: gsl.#Edge & {
 	capability:      ""
 
 	ingress: {
-		// Edge -> HTTP ingress to your container
+		// Edge -> TCP ingress to your container
 		(name): {
-			gsl.#HTTPListener
+			gsl.#TCPListener
 
 			port: 10809
 		}
