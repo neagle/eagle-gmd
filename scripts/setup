@@ -1,0 +1,31 @@
+#!/bin/bash
+
+PROJECT_NAMESPACE="eagle-gmd"
+kubectl create namespace $PROJECT_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+PRIVATE_KEY=${PRIVATE_KEY:-$(echo ~/).ssh/id_rsa}
+echo "Using private key: $PRIVATE_KEY"
+
+ssh-keyscan github.com >known_hosts
+
+# operator namespace setup
+kubectl create namespace gm-operator --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl delete secret greymatter-image-pull -n $PROJECT_NAMESPACE
+kubectl create secret docker-registry greymatter-image-pull \
+	--docker-server="$GREYMATTER_REGISTRY" \
+	--docker-username="$GREYMATTER_REGISTRY_USERNAME" \
+	--docker-password="$GREYMATTER_REGISTRY_PASSWORD" \
+	--docker-email="$GREYMATTER_REGISTRY_USERNAME" \
+	-n $PROJECT_NAMESPACE
+
+kubectl delete secret greymatter-admin-sync -n $PROJECT_NAMESPACE
+kubectl create secret generic greymatter-admin-sync \
+	--from-file=ssh-private-key=$PRIVATE_KEY \
+	--from-file=known_hosts=known_hosts \
+	-n $PROJECT_NAMESPACE
+
+kubectl delete secret sync-ssh-passphrase -n $PROJECT_NAMESPACE
+kubectl create secret generic sync-ssh-passphrase --from-literal=passphrase="$SSH_PASSPHRASE" -n $PROJECT_NAMESPACE
+
+kubectl apply -f ./k8s
