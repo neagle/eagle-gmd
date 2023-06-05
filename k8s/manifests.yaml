@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: sidecar
-          image: greymatter.jfrog.io/oci/greymatter-proxy:1.9.1-alpha
+          image: greymatter.jfrog.io/dev-oci/greymatter-proxy:1.9.1-alpha
           imagePullPolicy: Always
           ports:
           - containerPort: 10809
