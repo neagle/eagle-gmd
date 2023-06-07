@@ -13,6 +13,7 @@ ssh-keyscan github.com >known_hosts
 kubectl create namespace gm-operator --dry-run=client -o yaml | kubectl apply -f -
 
 kubectl delete secret greymatter-image-pull -n $PROJECT_NAMESPACE
+kubectl delete secret greymatter-image-pull -n gmdata
 kubectl create secret docker-registry greymatter-image-pull \
 	--docker-server="$GREYMATTER_REGISTRY" \
 	--docker-username="$GREYMATTER_REGISTRY_USERNAME" \
@@ -20,15 +21,27 @@ kubectl create secret docker-registry greymatter-image-pull \
 	--docker-email="$GREYMATTER_REGISTRY_USERNAME" \
 	-n $PROJECT_NAMESPACE
 
+kubectl create secret docker-registry greymatter-image-pull \
+	--docker-server="$GREYMATTER_REGISTRY" \
+	--docker-username="$GREYMATTER_REGISTRY_USERNAME" \
+	--docker-password="$GREYMATTER_REGISTRY_PASSWORD" \
+	--docker-email="$GREYMATTER_REGISTRY_USERNAME" \
+	-n gmdata
+
 kubectl delete secret greymatter-admin-sync -n $PROJECT_NAMESPACE
+kubectl delete secret greymatter-admin-sync -n gmdata
 kubectl create secret generic greymatter-admin-sync \
 	--from-file=ssh-private-key=$PRIVATE_KEY \
 	--from-file=known_hosts=known_hosts \
 	-n $PROJECT_NAMESPACE
+
+kubectl create secret generic greymatter-admin-sync \
+	--from-file=ssh-private-key=$PRIVATE_KEY \
+	--from-file=known_hosts=known_hosts \
+	-n gmdata
 
 kubectl delete secret sync-ssh-passphrase -n $PROJECT_NAMESPACE
 kubectl create secret generic sync-ssh-passphrase --from-literal=passphrase="$SSH_PASSPHRASE" -n $PROJECT_NAMESPACE
 
 # apply all yaml files in k8s recursively
 find ./k8s -name \*.yaml -exec kubectl apply -f {} \;
-

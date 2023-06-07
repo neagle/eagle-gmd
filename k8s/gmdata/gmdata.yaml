@@ -26,6 +26,8 @@ spec:
       labels:
         app: gmdata
     spec:
+      imagePullSecrets:
+      - name: greymatter-image-pull
       containers:
       - name: gmdata
         image: greymatter.jfrog.io/internal-oci/gm-data:latest
