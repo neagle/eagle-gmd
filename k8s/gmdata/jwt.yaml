@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jwt
+  namespace: gmdata
+spec:
+  selector:
+    app: jwt
+  ports:
+  - protocol: TCP
+    port: 50000
+    targetPort: 50000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jwt-security
+  namespace: gmdata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jwt-security
+  template:
+    metadata:
+      labels:
+        app: jwt-security
+    spec:
+      containers:
+      - name: jwt-security
+        image: greymatter.jfrog.io/internal-oci/jwt-security:latest
+        ports:
+        - containerPort: 50000
+        env:
+        - name: JWT_SERVER_PORT
+          value: "50000"
+        # This is the public key that users of this JWT must recognize
+        - name: JWT_PUB
+          value: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCSUVrNGpHL1FEMkZwNURxcmMrTzFPVy9CaG1BLwpKcmgyRFRaRWpybEZONnJYbTA0Vms0bUluNENZSmJ0VDdIQjc2cVJIeE9DNTFORVk0eFZHb1RUUVZta0Fnc3ljCllVdEdqZ3pKQUdTZExsSXZKSmtabWkrSjZBbWVtNng5UFZkajcxc2hHSnhNdjM4SDFTa2RRS29EZmllS3dZbFIKNENPUWFxdXdJVEpPYWd2R1VUQT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+        # This is the signing key for the JWTs
+        - name: PRIVATE_KEY
+          value: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1JSGNBZ0VCQkVJQUludTVqbEdaU2Z6M2dMOWczOVNoeE5UaWtUQ0lvUWtFVVUyckdnV1ZJTm9TN3RlM2d1Uk8KK2VKb3FDZTd0Z3pKL1RZcGVxU055elE2UGVTS2JmZC91K2FnQndZRks0RUVBQ09oZ1lrRGdZWUFCQUVnU1RpTQpiOUFQWVdua09xdHo0N1U1YjhHR1lEOG11SFlOTmtTT3VVVTNxdGViVGhXVGlZaWZnSmdsdTFQc2NIdnFwRWZFCjRMblUwUmpqRlVhaE5OQldhUUNDekp4aFMwYU9ETWtBWkowdVVpOGttUm1hTDRub0NaNmJySDA5VjJQdld5RVkKbkV5L2Z3ZlZLUjFBcWdOK0o0ckJpVkhnSTVCcXE3QWhNazVxQzhaUk1BPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=
+        - name: TOKEN_EXP_TIME
+          value: "30000"
+        # Don't use Redis. It causes problems, especially because it writes plaintext to the network without a TCP tunnel, and isn't necessary.
+        - name: REDIS_HOST
+          value: ""
+        - name: ENABLE_TLS
+          value: "false"
+        - name: ZEROLOG_LEVEL
+          value: debug
+        # The secret required to use this service. It has to be a b64 value for some reason.
+        - name: JWT_API_KEY
+          value: Zm9vCg==
+        # smuggle the user database in through an env var, to avoid a volume mount.
+        - name: USERS_JSON
+          value: ewogICJ1c2VycyI6IFsKICAgIHsKICAgICAgImxhYmVsIjogIkNOPXF1aWNrc3RhcnQsT1U9RW5naW5lZXJpbmcsTz1EZWNpcGhlciBUZWNobm9sb2d5IFN0dWRpb3MsTD1BbGV4YW5kcmlhLFNUPVZpcmdpbmlhLEM9VVMiLAogICAgICAidmFsdWVzIjogewogICAgICAgICJ1c2VyRE4iOiBbCiAgICAgICAgICAiQ049cXVpY2tzdGFydCxPVT1FbmdpbmVlcmluZyxPPURlY2lwaGVyIFRlY2hub2xvZ3kgU3R1ZGlvcyxMPUFsZXhhbmRyaWEsU1Q9VmlyZ2luaWEsQz1VUyIKICAgICAgICBdLAogICAgICAgICJlbWFpbCI6IFsKICAgICAgICAgICJxdWlja3N0YXJ0QGRlY2lwaGVybm93LmNvbSIsCiAgICAgICAgICAibG9jYWx1c2VyQGRlY2lwaGVybm93LmNvbSIKICAgICAgICBdLAogICAgICAgICJvcmciOiBbCiAgICAgICAgICAid3d3LmRlY2lwaGVybm93LmNvbSIsICJpZWVlIgogICAgICAgIF0sCiAgICAgICAgInByaXZpbGVnZSI6IFsKICAgICAgICAgICJyb290IiwgInJlYWRvbmx5IgogICAgICAgIF0sCiAgICAgICAgInByb2plY3RzIjogWwogICAgICAgICAgImdtZGF0YXgiLCAiand0LXNlcnZlciIKICAgICAgICBdLAogICAgICAgICJjaXRpemVuc2hpcCI6IFsKICAgICAgICAgICJVUyIKICAgICAgICBdLAoJInByaXZzIjogWwogICAgICAgICAgImlfYW1fYV9yb2JvdCIKCV0sCiAgICAgICAgImFnZSI6IFsKICAgICAgICAgICJhZHVsdCIKICAgICAgICBdCiAgICAgIH0KICAgIH0KICBdCn0K
+    #volumes:
+    #  - ./users.json:/gm-jwt-security/etc/users.json
+
+

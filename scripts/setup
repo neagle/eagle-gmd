@@ -2,6 +2,7 @@
 
 PROJECT_NAMESPACE="eagle-gmd"
 kubectl create namespace $PROJECT_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace gmdata --dry-run=client -o yaml | kubectl apply -f -
 
 PRIVATE_KEY=${PRIVATE_KEY:-$(echo ~/).ssh/id_rsa}
 echo "Using private key: $PRIVATE_KEY"
@@ -28,4 +29,6 @@ kubectl create secret generic greymatter-admin-sync \
 kubectl delete secret sync-ssh-passphrase -n $PROJECT_NAMESPACE
 kubectl create secret generic sync-ssh-passphrase --from-literal=passphrase="$SSH_PASSPHRASE" -n $PROJECT_NAMESPACE
 
-kubectl apply -f ./k8s
+# apply all yaml files in k8s recursively
+find ./k8s -name \*.yaml -exec kubectl apply -f {} \;
+

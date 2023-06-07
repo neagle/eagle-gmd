@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gmdata
+  namespace: gmdata
+spec:
+  selector:
+    app: gmdata
+  ports:
+  - protocol: TCP
+    port: 8181
+    targetPort: 8181
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gmdata
+  namespace: gmdata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gmdata
+  template:
+    metadata:
+      labels:
+        app: gmdata
+    spec:
+      containers:
+      - name: gmdata
+        image: greymatter.jfrog.io/internal-oci/gm-data:latest
+        ports:
+        - containerPort: 8181
+        env:
+        - name: SLEEP_BEFORE_START
+          value: "5"
+        - name: DEFAULT_USER_DN
+          value: "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
+        - name: CLIENT_JWT_ENDPOINT_ADDRESS
+          value: "jwt-standalone"
+        - name: CLIENT_JWT_ENDPOINT_PORT
+          value: "8080"
+        - name: CLIENT_JWT_ENDPOINT_PREFIX
+          value: "/"
+        - name: JWT_API_KEY
+          value: "Zm9vCg=="
+        - name: JWT_PUB
+          value: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCSUVrNGpHL1FEMkZwNURxcmMrTzFPVy9CaG1BLwpKcmgyRFRaRWpybEZONnJYbTA0Vms0bUluNENZSmJ0VDdIQjc2cVJIeE9DNTFORVk0eFZHb1RUUVZta0Fnc3ljCllVdEdqZ3pKQUdTZExsSXZKSmtabWkrSjZBbWVtNng5UFZkajcxc2hHSnhNdjM4SDFTa2RRS29EZmllS3dZbFIKNENPUWFxdXdJVEpPYWd2R1VUQT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
+        - name: CLIENT_PREFIX
+          value: ""
+        - name: CLIENT_USE_TLS
+          value: "false"
+        - name: CLIENT_HOST
+          value: "localhost"
+        - name: CLIENT_PORT
+          value: "8181"
+        - name: GMDATA_NAMESPACE
+          value: "world"
+        - name: GMDATA_NAMESPACE_USERFIELD
+          value: "email"
+        - name: MASTERKEY
+          value: "as8f0safd80fa8e09ae809ae80ae80fea80efa08fa08aef8f0e80ae"
+        - name: FILE_BUCKET
+          value: "decipherers"
+        - name: FILE_PARTITION
+          value: "gmdatax"
+        - name: USES3
+          value: "false"
+        - name: MONGOHOST
+          value: "mongo-ephemeral"
+        - name: MONGODB
+          value: "chili"
+        - name: KAFKA_PEERS
+          value: "kafka:9092"
+        - name: KAFKA_TOPIC_READ
+          value: "gmdatax-audit"
+        - name: KAFKA_TOPIC_UPDATE
+          value: "gmdatax-replicationlog"
+
