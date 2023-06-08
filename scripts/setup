@@ -14,6 +14,11 @@ _delete_secret() {
 }
 
 PRIVATE_KEY=${PRIVATE_KEY:-$(echo ~/).ssh/id_rsa}
+# Check if the file exists and is a regular file. If not, exit with an error message.
+if [[ ! -f $PRIVATE_KEY ]]; then
+	_display "The private key file $PRIVATE_KEY does not exist. Please provide a valid path via the PRIVATE_KEY environment variable if you have a private key with a different name or at a different location." $RED
+	exit 1
+fi
 _display "PRIVATE_KEY" $PRIVATE_KEY
 
 _display "Creating namespaces..."
@@ -33,10 +38,14 @@ kubectl create secret docker-registry greymatter-image-pull \
 	--docker-email="$GREYMATTER_REGISTRY_USERNAME" \
 	-n $PROJECT_NAMESPACE
 
-_delete_secret "greymatter-admin-sync"
-
 # discard output to stderr
 known_hosts=$(ssh-keyscan github.com 2>/dev/null)
+
+_delete_secret "greymatter-admin-sync"
+kubectl create secret generic greymatter-admin-sync \
+	--from-file=ssh-private-key=$PRIVATE_KEY \
+	--from-file=known_hosts=known_hosts \
+	-n $PROJECT_NAMESPACE
 
 _delete_secret "greymatter-core-repo"
 kubectl create secret generic greymatter-core-repo \
