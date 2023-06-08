@@ -5,13 +5,43 @@ source "${BASH_SOURCE%/*}/_colors"
 
 PROJECT_NAMESPACE="gmdata"
 
+## Meet the various prerequisites
+prerequisites="true"
+mustBeSet() {
+	v=$1
+	if [ -z "${!v}" ]; then
+		_display "${v} must be set." $YELLOW
+		prerequisites="false"
+	fi
+}
+mustHaveProgram() {
+	p=$1
+	if ! [ -x "$(command -v $p)" ]; then
+		_display "${p} must be installed and in the path." $YELLOW
+		prerequisites="false"
+	fi
+}
+
 # Delete secrets nicely so that we don't get errors if they don't exist
 _delete_secret() {
 	if kubectl get secret $1 -n $PROJECT_NAMESPACE &>/dev/null; then
-		echo "Resetting existing secret: $1..."
+		_display "Resetting existing secret: $1..."
 		kubectl delete secret $1 -n $PROJECT_NAMESPACE
 	fi
 }
+
+## Meet the prerequisites before going in and changing anything
+mustBeSet "GREYMATTER_REGISTRY"
+mustBeSet "GREYMATTER_REGISTRY_USERNAME"
+mustBeSet "GREYMATTER_REGISTRY_PASSWORD"
+mustHaveProgram kubectl
+mustHaveProgram ssh-keyscan
+
+## Make the new cluster in the target namespace. Avoid 6999 and 443 port conflicts
+if [ "$prerequisites" != "true" ]; then
+	_display "Prerequisites not met. Exiting." $RED
+	exit 1
+fi
 
 PRIVATE_KEY=${PRIVATE_KEY:-$(echo ~/).ssh/id_rsa}
 # Check if the file exists and is a regular file. If not, exit with an error message.
