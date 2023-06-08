@@ -99,7 +99,7 @@ kubectl apply -f ./k8s/sync.yaml -n $MY_NAMESPACE # this deploys the greymatter.
 Once you've deployed your manifests retrieve the Kubernetes ingress service for your 
 project's edge node:
 ```bash
-kubectl get svc edge-eagle-gmd -n $MY_NAMESPACE
+kubectl get svc edge-gmdata -n $MY_NAMESPACE
 ```
 
 Retrieve the hostname entry and port and populate the value in `greymatter/globals.cue`: `defaults.edge.endpoint`.
@@ -170,7 +170,7 @@ __Key:__ `/etc/proxy/tls/sidecar/server.key`
 > Note: The path + file name is important and should be exactly what is outlined above.
  
 greymatter.io mesh configurations have been setup for your service to look at these paths. 
-It is up to you to get them there! Following the pattern defined in the `k8s/manifests.yaml` edge-eagle-gmd Deployment 
+It is up to you to get them there! Following the pattern defined in the `k8s/manifests.yaml` edge-gmdata Deployment 
 is a great way to get your certs mounted and available to the greymatter.io data plane.
 
 > Note: your enterprise will need to make sure the core mesh configurations support volume mounted certificates

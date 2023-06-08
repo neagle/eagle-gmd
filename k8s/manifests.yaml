@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: edge
-  namespace: eagle-gmd
+  namespace: gmdata
 spec:
   replicas: 1
   selector:
     matchLabels:
-      greymatter.io/cluster: eagle-gmd-edge
+      greymatter.io/cluster: gmdata-edge
   template:
     metadata:
       labels:
-        greymatter.io/cluster: eagle-gmd-edge
+        greymatter.io/cluster: gmdata-edge
     spec:
       containers:
         - name: sidecar
@@ -24,7 +24,7 @@ spec:
             name: stats
           env:
             - name: XDS_CLUSTER
-              value: eagle-gmd-edge
+              value: gmdata-edge
             - name: ENVOY_ADMIN_LOG_PATH
               value: /dev/stdout
             - name: ENVOY_ADMIN_PORT
@@ -51,7 +51,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: edge
-  namespace: eagle-gmd
+  namespace: gmdata
 spec:
   ports:
   - name: ingress
@@ -59,6 +59,6 @@ spec:
     protocol: TCP
     targetPort: 10809
   selector:
-    greymatter.io/cluster: eagle-gmd-edge
+    greymatter.io/cluster: gmdata-edge
   type: LoadBalancer
 

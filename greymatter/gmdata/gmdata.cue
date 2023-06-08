@@ -6,25 +6,25 @@ import (
 	"gmdata.module/greymatter:globals"
 )
 
-Hello_World: gsl.#Service & {
+Gmdata: gsl.#Service & {
 	// A context provides global information from globals.cue
 	// to your service definitions.
-	context: Hello_World.#NewContext & globals
+	context: Gmdata.#NewContext & globals
 
 	// name must follow the pattern namespace/name
-	name:                      "hello-world"
-	display_name:              "Eagle GMD Hello World"
+	name:                      "gmdata"
+	display_name:              "gmdata"
 	version:                   "v1.0.0"
-	description:               "The simplest service around."
+	description:               "Data... to the MAX!"
 	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: false
 	enable_instance_metrics:   false
-	business_impact:           "low"
-	owner:                     "Nate Eagle"
-	capability:                "Helloing the world"
+	business_impact:           "high"
+	owner:                     "greymatter"
+	capability:                "data"
 
-	// Hello-World -> ingress to your container
+	// Gmdata -> ingress to your container
 	ingress: {
 		(name): {
 			gsl.#TCPListener
@@ -35,7 +35,7 @@ Hello_World: gsl.#Service & {
 				instances: [
 					{
 						host: "127.0.0.1"
-						port: 80
+						port: 8181
 					},
 				]
 			}
@@ -57,4 +57,4 @@ Hello_World: gsl.#Service & {
 	}
 }
 
-exports: "hello-world": Hello_World
+exports: "gmdata": Gmdata

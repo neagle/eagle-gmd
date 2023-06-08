@@ -3,12 +3,12 @@
 // repository in the mesh. This edge would be separate from the default
 // greymatter edge that is deployed via enterprise-level configuration in
 // the gitops-core git repository.
-package eagle_gmd
+package gmdata
 
 import (
 	gsl "greymatter.io/gsl/v1"
 
-	"eagle_gmd.module/greymatter:globals"
+	"gmdata.module/greymatter:globals"
 )
 
 Edge: gsl.#Edge & {
@@ -19,7 +19,7 @@ Edge: gsl.#Edge & {
 	name:            "edge"
 	display_name:    "Eagle GMD Edge"
 	version:         "v1.8.1"
-	description:     "Edge ingress for eagle-gmd"
+	description:     "Edge ingress for gmdata"
 	business_impact: "high"
 	owner:           "Nate Eagle"
 	capability:      ""
@@ -34,4 +34,4 @@ Edge: gsl.#Edge & {
 	}
 }
 
-exports: "edge-eagle-gmd": Edge
+exports: "edge-gmdata": Edge

@@ -1,0 +1,42 @@
+BASE03="\033[38;5;234m"
+BASE02="\033[38;5;235m"
+BASE01="\033[38;5;240m"
+BASE00="\033[38;5;241m"
+BASE0="\033[38;5;244m"
+BASE1="\033[38;5;245m"
+BASE2="\033[38;5;254m"
+BASE3="\033[38;5;230m"
+YELLOW="\033[38;5;136m"
+ORANGE="\033[38;5;166m"
+RED="\033[38;5;160m"
+MAGENTA="\033[38;5;125m"
+VIOLET="\033[38;5;61m"
+BLUE="\033[38;5;34m"
+CYAN="\033[38;5;37m"
+GREEN="\033[38;5;64m"
+NC="\033[0m"
+_display() {
+	local COLOR="${CYAN}"
+	local KEY_COLOR="${3:-$YELLOW}"
+	local VALUE_COLOR="${4:-$GREEN}"
+
+	local COLOR_NAMES=("${BASE03}" "${BASE02}" "${BASE01}" "${BASE00}" "${BASE0}" "${BASE1}" "${BASE2}" "${BASE3}" "${YELLOW}" "${ORANGE}" "${RED}" "${MAGENTA}" "${VIOLET}" "${BLUE}" "${CYAN}" "${GREEN}")
+
+	# check if $2 is a color
+	local SECOND_PARAM_IS_COLOR=false
+	for name in "${COLOR_NAMES[@]}"; do
+		if [ "$2" = "$name" ]; then
+			SECOND_PARAM_IS_COLOR=true
+			break
+		fi
+	done
+
+	if [ -z "$2" ] || [ "$SECOND_PARAM_IS_COLOR" = true ]; then
+		local PREFIX="→"
+		COLOR="${2:-$CYAN}"
+		echo -e "${PREFIX} ${COLOR}$1${NC}"
+	else
+		local PREFIX="⤑"
+		echo -e "${PREFIX} ${KEY_COLOR}$1: ${VALUE_COLOR}$2${NC}"
+	fi
+}

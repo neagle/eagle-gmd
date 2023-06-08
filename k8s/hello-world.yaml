@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-config
-  namespace: eagle-gmd
+  namespace: gmdata
 data:
   index.html: |
     <html>
@@ -19,7 +19,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-world
-  namespace: eagle-gmd
+  namespace: gmdata
   annotations:
     "greymatter.io/inject-sidecar-to": "80"
 spec:
@@ -51,7 +51,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-service
-  namespace: eagle-gmd
+  namespace: gmdata
 spec:
   selector:
     app: hello-world

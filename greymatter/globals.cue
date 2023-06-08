@@ -6,7 +6,7 @@ import (
 
 globals: gsl.#DefaultContext & {
 	edge_host: "localhost:10809"
-	namespace: "eagle-gmd"
+	namespace: "gmdata"
 
 	// Please contact your mesh administrators as to what
 	// values must be set per your mesh deployment.
