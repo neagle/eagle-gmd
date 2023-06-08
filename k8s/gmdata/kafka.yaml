@@ -16,6 +16,8 @@ kind: Deployment
 metadata:
   name: kafka
   namespace: gmdata
+  annotations:
+    "greymatter.io/inject-sidecar-to": "9092"
 spec:
   replicas: 1
   selector:

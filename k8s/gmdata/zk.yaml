@@ -16,6 +16,8 @@ kind: Deployment
 metadata:
   name: zk
   namespace: gmdata
+  annotations:
+    "greymatter.io/inject-sidecar-to": "2181"
 spec:
   replicas: 1
   selector:

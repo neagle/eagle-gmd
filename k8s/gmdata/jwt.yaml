@@ -16,6 +16,8 @@ kind: Deployment
 metadata:
   name: jwt-security
   namespace: gmdata
+  annotations:
+    "greymatter.io/inject-sidecar-to": "50000"
 spec:
   replicas: 1
   selector:
