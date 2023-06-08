@@ -1,1 +1,1 @@
-module: "eagle_gmd.module"
+module: "gmdata.module"
