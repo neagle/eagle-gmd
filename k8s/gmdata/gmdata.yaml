@@ -16,6 +16,8 @@ kind: Deployment
 metadata:
   name: gmdata
   namespace: gmdata
+  annotations:
+    "greymatter.io/inject-sidecar-to": "8181"
 spec:
   replicas: 1
   selector:

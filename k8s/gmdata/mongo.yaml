@@ -18,6 +18,8 @@ kind: Deployment
 metadata:
   name: mongo
   namespace: gmdata
+  annotations:
+    "greymatter.io/inject-sidecar-to": "27017"
 spec:
   replicas: 1
   selector:
