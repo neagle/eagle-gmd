@@ -3,6 +3,26 @@
 # Get color variables
 source "${BASH_SOURCE%/*}/_colors"
 
+# Install project githooks
+HOOKS_DIR="./scripts/_hooks"
+GIT_HOOKS_DIR="./.git/hooks"
+
+# Loop over the files in HOOKS_DIR
+for hook in $HOOKS_DIR/*; do
+	# Get the filename
+	hook_name=$(basename $hook)
+
+	# Destination path for the symlink
+	dest="$GIT_HOOKS_DIR/$hook_name"
+
+	# Create the symlink if it doesn't already exist
+	if [ ! -e "$dest" ]; then
+		_display "Symlinking $hook_name githook..."
+		ln -s "../../scripts/_hooks/$hook_name" "$dest"
+		chmod +x "$dest"
+	fi
+done
+
 PROJECT_NAMESPACE="gmdata"
 
 ## Meet the various prerequisites

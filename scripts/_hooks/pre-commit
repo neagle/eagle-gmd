@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if
+  ! command -v greymatter 1>/dev/null
+then
+  echo "Please install the greymatter cli so we can run greymatter sync --dry-run before committing changes."
+  exit 1
+fi
+
+# Run the configuration check command
+echo "Running greymatter sync --dry-run..."
+greymatter sync --dry-run 1>/dev/null
+status=$?
+
+# Check the exit status
+if [ $status -eq 0 ]; then
+  echo "✅ greymatter sync --dry-run succeeded!"
+else
+  echo "❌ greymatter sync --dry-run returned errors; aborting commit."
+  exit 1
+fi
