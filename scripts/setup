@@ -94,7 +94,7 @@ known_hosts=$(ssh-keyscan github.com 2>/dev/null)
 _delete_secret "greymatter-admin-sync"
 kubectl create secret generic greymatter-admin-sync \
 	--from-file=ssh-private-key=$PRIVATE_KEY \
-	--from-file=known_hosts=known_hosts \
+	--from-literal=known_hosts="$known_hosts" \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "greymatter-core-repo"
