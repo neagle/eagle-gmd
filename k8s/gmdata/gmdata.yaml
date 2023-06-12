@@ -41,7 +41,7 @@ spec:
         - name: DEFAULT_USER_DN
           value: "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
-          value: "jwt-standalone"
+          value: "jwt-security"
         - name: CLIENT_JWT_ENDPOINT_PORT
           value: "8080"
         - name: CLIENT_JWT_ENDPOINT_PREFIX
@@ -71,13 +71,13 @@ spec:
         - name: USES3
           value: "false"
         - name: MONGOHOST
-          value: "mongo-ephemeral"
+          value: "mongo"
         - name: MONGODB
           value: "chili"
-        - name: KAFKA_PEERS
-          value: "kafka:9092"
-        - name: KAFKA_TOPIC_READ
-          value: "gmdatax-audit"
-        - name: KAFKA_TOPIC_UPDATE
-          value: "gmdatax-replicationlog"
+            #- name: KAFKA_PEERS
+            #  value: "kafka:9092"
+            #- name: KAFKA_TOPIC_READ
+            #  value: "gmdatax-audit"
+            #- name: KAFKA_TOPIC_UPDATE
+            #  value: "gmdatax-replicationlog"
 
