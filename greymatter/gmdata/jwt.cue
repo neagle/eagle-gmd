@@ -12,7 +12,8 @@ Jwt: gsl.#Service & {
 	context: Jwt.#NewContext & globals
 
 	// name must follow the pattern namespace/name
-	name:                      "jwt"
+	// per daniel, above comment is a lie, namespace gets added for you
+	name:                      "jwt-security"
 	display_name:              "gmdata Jwt"
 	version:                   "v1.0.0"
 	description:               "EDIT ME"
