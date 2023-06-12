@@ -37,7 +37,7 @@ Jwt: gsl.#Service & {
 							instances: [
 								{
 									host: "127.0.0.1"
-									port: 50000
+									port: 8080
 								},
 							]
 						}
@@ -46,10 +46,6 @@ Jwt: gsl.#Service & {
 			}
 		}
 	}
-
-	// Looking to make your tcp service accessible from the edge?
-	// You must open a new listener on the edge whose upstream name
-	// refers to this service's name.
 }
 
 exports: "jwt": Jwt
