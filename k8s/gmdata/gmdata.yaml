@@ -71,7 +71,7 @@ spec:
         - name: USES3
           value: "false"
         - name: MONGOHOST
-          value: "mongo"
+          value: "mongo-0"
         - name: MONGODB
           value: "chili"
             #- name: KAFKA_PEERS

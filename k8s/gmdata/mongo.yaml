@@ -14,13 +14,14 @@ spec:
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mongo
   namespace: gmdata
   annotations:
     "greymatter.io/inject-sidecar-to": "27017"
 spec:
+  serviceName: mongo
   replicas: 1
   selector:
     matchLabels:
