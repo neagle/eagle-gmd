@@ -41,7 +41,7 @@ spec:
         - name: DEFAULT_USER_DN
           value: "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
-          value: "jwt-security"
+          value: "jwt"
         - name: CLIENT_JWT_ENDPOINT_PORT
           value: "8080"
         - name: CLIENT_JWT_ENDPOINT_PREFIX
@@ -71,7 +71,7 @@ spec:
         - name: USES3
           value: "false"
         - name: MONGOHOST
-          value: "mongo-0"
+          value: "127.0.0.1:27017"
         - name: MONGODB
           value: "chili"
             #- name: KAFKA_PEERS

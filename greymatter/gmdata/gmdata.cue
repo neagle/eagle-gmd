@@ -45,6 +45,18 @@ Gmdata: gsl.#Service & {
                 }
         }
 
+	egress: {
+		"egress-to-mongo": {
+			gsl.#TCPListener
+
+			port: 27017
+			upstream: {
+				namespace: "gmdata"
+				name:      "mongo"
+			}
+		}
+	}
+
 	// Looking to make your tcp service accessible from the edge?
 	// You must open a new listener on the edge whose upstream name
 	// refers to this service's name.
