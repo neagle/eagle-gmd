@@ -17,8 +17,8 @@ Jwt: gsl.#Service & {
 	display_name:              "gmdata JWT"
 	version:                   "v1.0.0"
 	description:               "JWT security service for gmdata"
-	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
-	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
+	api_endpoint:              "/services/\(context.globals.namespace)/\(name)/"
+	api_spec_endpoint:         "/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: false
 	enable_instance_metrics:   false
 	business_impact:           "high"
