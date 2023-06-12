@@ -28,17 +28,21 @@ Jwt: gsl.#Service & {
 	// Jwt -> ingress to your container
 	ingress: {
 		(name): {
-			gsl.#TCPListener
+			gsl.#HTTPListener
 
-			upstream: {
-				gsl.#Upstream
-				name: "local"
-				instances: [
-					{
-						host: "127.0.0.1"
-						port: 50000
-					},
-				]
+			routes: {
+				"/": {
+					upstreams: {
+						"local": {
+							instances: [
+								{
+									host: "127.0.0.1"
+									port: 50000
+								},
+							]
+						}
+					}
+				}
 			}
 		}
 	}
@@ -46,16 +50,6 @@ Jwt: gsl.#Service & {
 	// Looking to make your tcp service accessible from the edge?
 	// You must open a new listener on the edge whose upstream name
 	// refers to this service's name.
-	edge: {
-		edge_name: "edge"
-		routes: "/services/\(context.globals.namespace)/\(name)": {
-			prefix_rewrite: "/"
-			upstreams: (name): {
-				gsl.#Upstream
-				namespace: context.globals.namespace
-			}
-		}
-	}
 }
 
 exports: "jwt": Jwt
