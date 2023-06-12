@@ -14,14 +14,14 @@ Jwt: gsl.#Service & {
 	// name must follow the pattern namespace/name
 	// per daniel, above comment is a lie, namespace gets added for you
 	name:                      "jwt-security"
-	display_name:              "gmdata Jwt"
+	display_name:              "gmdata JWT"
 	version:                   "v1.0.0"
-	description:               "EDIT ME"
+	description:               "JWT security service for gmdata"
 	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: false
 	enable_instance_metrics:   false
-	business_impact:           "low"
+	business_impact:           "high"
 	owner:                     "gmdata"
 	capability:                ""
 
@@ -46,6 +46,16 @@ Jwt: gsl.#Service & {
 	// Looking to make your tcp service accessible from the edge?
 	// You must open a new listener on the edge whose upstream name
 	// refers to this service's name.
+	edge: {
+		edge_name: "edge"
+		routes: "/services/\(context.globals.namespace)/\(name)": {
+			prefix_rewrite: "/"
+			upstreams: (name): {
+				gsl.#Upstream
+				namespace: context.globals.namespace
+			}
+		}
+	}
 }
 
 exports: "jwt": Jwt
