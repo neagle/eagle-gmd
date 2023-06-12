@@ -24,23 +24,26 @@ Gmdata: gsl.#Service & {
 	owner:                     "greymatter"
 	capability:                "data"
 
-	// Gmdata -> ingress to your container
-	ingress: {
-		(name): {
-			gsl.#TCPListener
+        ingress: {
+                (name): {
+                        gsl.#HTTPListener
 
-			upstream: {
-				gsl.#Upstream
-				name: "local"
-				instances: [
-					{
-						host: "127.0.0.1"
-						port: 8181
-					},
-				]
-			}
-		}
-	}
+                        routes: {
+                                "/": {
+                                        upstreams: {
+                                                "local": {
+                                                        instances: [
+                                                                {
+                                                                        host: "127.0.0.1"
+                                                                        port: 8181
+                                                                },
+                                                        ]
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
 
 	// Looking to make your tcp service accessible from the edge?
 	// You must open a new listener on the edge whose upstream name
