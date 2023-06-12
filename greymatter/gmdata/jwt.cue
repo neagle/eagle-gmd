@@ -46,6 +46,18 @@ Jwt: gsl.#Service & {
 			}
 		}
 	}
+
+        edge: {
+                edge_name: "edge"
+                routes: "/services/\(context.globals.namespace)/\(name)": {
+                        prefix_rewrite: "/"
+                        upstreams: (name): {
+                                gsl.#Upstream
+                                namespace: context.globals.namespace
+                        }
+                }
+        }
+
 }
 
 exports: "jwt": Jwt
