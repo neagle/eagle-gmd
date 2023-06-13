@@ -88,6 +88,14 @@ kubectl create secret docker-registry greymatter-image-pull \
 	--docker-email="$GREYMATTER_REGISTRY_USERNAME" \
 	-n $PROJECT_NAMESPACE
 
+# Create the ingress secret
+_delete_secret greymatter-edge-ingress
+kubectl create secret generic greymatter-edge-ingress \
+	--from-file=ca.crt=./certs/intermediate.crt \
+	--from-file=server.crt=./certs/localhost.crt \
+	--from-file=server.key=./certs/localhost.key \
+	-n $PROJECT_NAMESPACE
+
 # discard output to stderr
 known_hosts=$(ssh-keyscan github.com 2>/dev/null)
 
