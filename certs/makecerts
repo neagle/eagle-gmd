@@ -1,0 +1,115 @@
+#!/bin/bash
+
+(
+# work from this script's directory
+cd "${0%/*}"
+
+
+
+# not indented because of the heredoc
+makeInit() {
+export GM_CA=gm
+# clean up first
+rm *.p12 > /dev/null 2>&1
+rm *.pem > /dev/null 2>&1
+rm *.srl > /dev/null 2>&1
+rm *.csr > /dev/null  2>&1
+rm ./exts > /dev/null 2>&1
+rm ./openssl.cfg > /dev/null 2>&1
+# put in SAN for servers here
+cat > exts <<EOF
+[ gm_edge_server ]
+subjectAltName = DNS.1:edge,DNS.2:localhost,IP:127.0.0.1
+
+[ gm_client ]
+keyUsage = digitalSignature
+extendedKeyUsage = clientAuth
+EOF
+# append our custom config before we begin
+export OPENSSLDIR=$(bash -c "echo $(openssl version -d | awk '{print $2}')")
+cat ${OPENSSLDIR}/openssl.cnf ./exts  > ./openssl.cfg
+}
+
+
+makeCleanup() {
+  rm *.srl > /dev/null 2>&1
+  rm *.csr > /dev/null  2>&1
+  rm ./exts > /dev/null 2>&1
+  rm ./openssl.cfg > /dev/null 2>&1
+}
+
+
+makeCA() {
+  # This generates the CA root secret key and issues the certificate for it
+  openssl genrsa -out ./${GM_CA}_ca_key.pem $KEYSIZE
+  openssl req -x509 -new -sha256 -nodes -config ./openssl.cfg \
+	-days ${CADAYS} \
+	-key ./${GM_CA}_ca_key.pem \
+	-subj "/C=US/O=${GM_CA}/OU=certificateauthority/CN=ca" \
+	-out ./${GM_CA}_ca_cert.pem
+}
+
+# This generates a server cert under the CA
+makeServer() {
+  SERVERROLE=$1
+  PASS=$2
+  openssl genrsa -out ./${GM_CA}_${SERVERROLE}_key.pem $KEYSIZE
+  openssl req -new -sha256 -nodes -config ./openssl.cfg \
+ 	-reqexts ${GM_CA}_${SERVERROLE}_server \
+	-key ./${GM_CA}_${SERVERROLE}_key.pem \
+	-subj "/C=US/O=${GM_CA}/OU=server/CN=${SERVERROLE}" \
+	-out ./${GM_CA}_${SERVERROLE}.csr
+  openssl x509 -req -in -sha256 -CAcreateserial \
+	-extfile ./openssl.cfg \
+	-in ./${GM_CA}_${SERVERROLE}.csr \
+	-days ${CRTDAYS} \
+	-extensions ${GM_CA}_${SERVERROLE}_server \
+	-CA ./${GM_CA}_ca_cert.pem \
+	-CAkey ./${GM_CA}_ca_key.pem \
+	-out ./${GM_CA}_${SERVERROLE}_cert.pem
+  openssl pkcs12 -export \
+	  -in ./${GM_CA}_${SERVERROLE}_cert.pem \
+	  -inkey ./${GM_CA}_${SERVERROLE}_key.pem \
+	  -out ./${GM_CA}_${SERVERROLE}.p12 \
+	  -passout pass:$PASS
+}
+
+makeUser() {
+  CLIENTROLE=$1
+  PASS=$2
+  openssl genrsa -out ./${GM_CA}_${CLIENTROLE}_key.pem $KEYSIZE
+  openssl req -new -sha256 -nodes -config ./openssl.cfg \
+	-reqexts ${GM_CA}_client \
+	-key ./${GM_CA}_${CLIENTROLE}_key.pem \
+	-subj "/C=US/O=${GM_CA}/OU=user/CN=${CLIENTROLE}" \
+	-out ./${GM_CA}_${CLIENTROLE}.csr
+  openssl x509 -req -in -sha256 -CAcreateserial \
+	-extfile ./openssl.cfg \
+	-in ./${GM_CA}_${CLIENTROLE}.csr \
+	-days ${CRTDAYS} \
+	-extensions ${GM_CA}_client \
+	-CA ./${GM_CA}_ca_cert.pem \
+	-CAkey ./${GM_CA}_ca_key.pem \
+	-out ./${GM_CA}_${CLIENTROLE}_cert.pem 
+  openssl pkcs12 -export \
+	  -in ./${GM_CA}_${CLIENTROLE}_cert.pem \
+	  -inkey ./${GM_CA}_${CLIENTROLE}_key.pem \
+	  -out ./${GM_CA}_${CLIENTROLE}.p12 \
+	  -passout pass:$PASS
+}
+
+
+# The CA we are working for
+export KEYSIZE=4096
+export CADAYS=1024
+export CRTDAYS=500
+
+# Do the generation of items
+makeInit                         # edit the ssl config for extensions like SAN
+makeCA                           # generate a stable CA
+makeServer edge    greymatter    # make edge server cert with password
+makeUser rfielding greymatter    # user rfielding with password
+makeUser neagle    greymatter    # user neagle with password
+makeUser dcox      greymatter    # user dcox with password
+makeCleanup                      # remove temp files
+)

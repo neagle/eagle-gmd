@@ -1,3 +1,9 @@
 .DS_Store
 known_hosts
 .envrc
+certs/*.pem
+certs/*.p12
+certs/*.srl
+certs/*.crl
+certs/exts
+certs/openssl.cfg
