@@ -8,7 +8,7 @@ cd "${0%/*}"
 
 # not indented because of the heredoc
 makeInit() {
-export GM_CA=gm
+export GM_CA=gmdata
 # clean up first
 rm *.p12 > /dev/null 2>&1
 rm *.pem > /dev/null 2>&1
@@ -18,10 +18,10 @@ rm ./exts > /dev/null 2>&1
 rm ./openssl.cfg > /dev/null 2>&1
 # put in SAN for servers here
 cat > exts <<EOF
-[ gm_edge_server ]
+[ gmdata_edge_server ]
 subjectAltName = DNS.1:edge,DNS.2:localhost,IP:127.0.0.1
 
-[ gm_client ]
+[ gmdata_client ]
 keyUsage = digitalSignature
 extendedKeyUsage = clientAuth
 EOF
