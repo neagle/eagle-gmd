@@ -45,7 +45,7 @@ makeCA() {
   openssl req -x509 -new -sha256 -nodes -config ./openssl.cfg \
 	-days ${CADAYS} \
 	-key ./${GM_CA}_ca_key.pem \
-	-subj "/C=US/O=${GM_CA}/OU=certificateauthority/CN=ca" \
+	-subj "/C=US/O=${GM_CA}/OU=certificateauthority/OU=gmdata/CN=ca" \
 	-out ./${GM_CA}_ca_cert.pem
 }
 
@@ -57,7 +57,7 @@ makeServer() {
   openssl req -new -sha256 -nodes -config ./openssl.cfg \
  	-reqexts ${GM_CA}_${SERVERROLE}_server \
 	-key ./${GM_CA}_${SERVERROLE}_key.pem \
-	-subj "/C=US/O=${GM_CA}/OU=server/CN=${SERVERROLE}" \
+	-subj "/C=US/O=${GM_CA}/OU=server/OU=gmdata/CN=${SERVERROLE}" \
 	-out ./${GM_CA}_${SERVERROLE}.csr
   openssl x509 -req -in -sha256 -CAcreateserial \
 	-extfile ./openssl.cfg \
@@ -81,7 +81,7 @@ makeUser() {
   openssl req -new -sha256 -nodes -config ./openssl.cfg \
 	-reqexts ${GM_CA}_client \
 	-key ./${GM_CA}_${CLIENTROLE}_key.pem \
-	-subj "/C=US/O=${GM_CA}/OU=user/CN=${CLIENTROLE}" \
+	-subj "/C=US/O=${GM_CA}/OU=user/OU=gmdata/CN=${CLIENTROLE}" \
 	-out ./${GM_CA}_${CLIENTROLE}.csr
   openssl x509 -req -in -sha256 -CAcreateserial \
 	-extfile ./openssl.cfg \
@@ -111,5 +111,6 @@ makeServer edge    greymatter    # make edge server cert with password
 makeUser rfielding greymatter    # user rfielding with password
 makeUser neagle    greymatter    # user neagle with password
 makeUser dcox      greymatter    # user dcox with password
+makeUser cholmes   greymatter    # user dcox with password
 makeCleanup                      # remove temp files
 )
