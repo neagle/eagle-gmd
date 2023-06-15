@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "label": "CN=neagle,OU=gmdata,OU=user,O=gmdata,C=US",
+      "values": {
+        "userDN": [
+          "CN=neagle,OU=gmdata,OU=user,O=gmdata,C=US"
+        ],
+        "email": [
+          "neagle@gmdata.io",
+          "neagle@greymatter.io"
+        ],
+        "projects": [
+          "east",
+          "west"
+        ],
+        "citizenship": [
+          "US",
+          "NR"
+        ]
+      }
+    },
+    {
+      "label": "CN=rfielding,OU=gmdata,OU=user,O=gmdata,C=US",
+      "values": {
+        "userDN": [
+          "CN=rfielding,OU=gmdata,OU=user,O=gmdata,C=US"
+        ],
+        "email": [
+          "rfielding@gmdata.io",
+          "rfielding@greymatter.io"
+        ],
+        "projects": [
+          "east",
+          "south"
+        ],
+        "citizenship": [
+          "US"
+        ]
+      }
+    },
+    {
+      "label": "CN=dcox,OU=gmdata,OU=user,O=gmdata,C=US",
+      "values": {
+        "userDN": [
+          "CN=dcox,OU=gmdata,OU=user,O=gmdata,C=US"
+        ],
+        "email": [
+          "dcox@gmdata.io"
+        ],
+        "projects": [
+          "north"
+        ],
+        "citizenship": [
+          "US"
+        ]
+      }
+    },
+    {
+      "label": "CN=cholmes,OU=gmdata,OU=user,O=gmdata,C=US",
+      "values": {
+        "userDN": [
+          "CN=cholmes,OU=gmdata,OU=user,O=gmdata,C=US"
+        ],
+        "email": [
+          "cholmes@gmdata.io"
+        ],
+        "projects": [
+          "north",
+          "east",
+          "south",
+          "west"
+        ],
+        "citizenship": [
+          "US"
+        ]
+      }
+    }
+  ]
+}
