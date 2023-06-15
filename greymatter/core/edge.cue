@@ -25,16 +25,11 @@ Edge: gsl.#Edge & {
 	capability:      ""
 
         ingress: {
-                (name): {
-                        gsl.#TCPListener
-                        port: 10809
-                        upstream: {
-                                gsl.#Upstream
-                                name:      "securityhole"
-                                namespace: "gmdata"
-                        }
+               (name): {
+                       gsl.#HTTPListener
 
-                }
+                       port: 10809
+               }
 
                 "gmdata-tls": {
                         gsl.#MTLSListener & {
