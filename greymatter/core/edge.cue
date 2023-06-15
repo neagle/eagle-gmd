@@ -24,14 +24,41 @@ Edge: gsl.#Edge & {
 	owner:           "Nate Eagle"
 	capability:      ""
 
-	ingress: {
-		// Edge -> HTTP ingress to your container
-		(name): {
-			gsl.#HTTPListener
+        ingress: {
+                (name): {
+                        gsl.#TCPListener
+                        port: 10809
+                        upstream: {
+                                gsl.#Upstream
+                                name:      "securityhole"
+                                namespace: "gmdata"
+                        }
 
-			port: 10809
-		}
-	}
+                }
+
+                "gmdata-tls": {
+                        gsl.#MTLSListener & {
+                                ssl_config: {
+                                        cert_key_pairs: [
+                                                {
+                                                        certificate_path: "/etc/proxy/tls/sidecar/server.pem"
+                                                        key_path:         "/etc/proxy/tls/sidecar/server-key.pem"
+                                                },
+                                        ]
+                                        trust_file: "/etc/proxy/tls/sidecar/ca.pem"
+                                }
+                        }
+                        gsl.#HTTPListener
+
+                        filters: [
+                                gsl.#InheadersFilter,
+                        ]
+
+                        port: 10810
+                }
+
+        }
+
 }
 
 exports: "edge-gmdata": Edge

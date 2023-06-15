@@ -22,6 +22,13 @@ spec:
             name: ingress
           - containerPort: 8082
             name: stats
+          resources:
+            limits:
+              cpu: 200m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           env:
             - name: XDS_CLUSTER
               value: gmdata-edge
@@ -37,15 +44,25 @@ spec:
               value: controlensemble.greymatter.svc.cluster.local
             - name: XDS_PORT
               value: "50000"
-          resources:
-            limits:
-              cpu: 200m
-              memory: 200Mi
-            requests:
-              cpu: 100m
-              memory: 128Mi
+          volumeMounts:
+          - mountPath: /etc/proxy/tls/sidecar
+            name: edge-certs
+            readOnly: true
+      volumes:
+      - name: edge-certs
+        secret:
+          secretName: greymatter-edge-ingress
+          defaultMode: 420
+          items:
+          - key: server.crt
+            path: server.pem
+          - key: server.key
+            path: server-key.pem
+          - key: ca.crt
+            path: ca.pem
       imagePullSecrets:
       - name: greymatter-image-pull
+
 ---
 apiVersion: v1
 kind: Service
