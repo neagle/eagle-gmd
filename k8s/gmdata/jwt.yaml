@@ -56,10 +56,17 @@ spec:
         # The secret required to use this service. It has to be a b64 value for some reason.
         - name: JWT_API_KEY
           value: Zm9vCg==
-        # smuggle the user database in through an env var, to avoid a volume mount.
-        - name: USERS_JSON
-          value: ewogICJ1c2VycyI6IFsKICAgIHsKICAgICAgImxhYmVsIjogIkNOPXF1aWNrc3RhcnQsT1U9RW5naW5lZXJpbmcsTz1EZWNpcGhlciBUZWNobm9sb2d5IFN0dWRpb3MsTD1BbGV4YW5kcmlhLFNUPVZpcmdpbmlhLEM9VVMiLAogICAgICAidmFsdWVzIjogewogICAgICAgICJ1c2VyRE4iOiBbCiAgICAgICAgICAiQ049cXVpY2tzdGFydCxPVT1FbmdpbmVlcmluZyxPPURlY2lwaGVyIFRlY2hub2xvZ3kgU3R1ZGlvcyxMPUFsZXhhbmRyaWEsU1Q9VmlyZ2luaWEsQz1VUyIKICAgICAgICBdLAogICAgICAgICJlbWFpbCI6IFsKICAgICAgICAgICJxdWlja3N0YXJ0QGRlY2lwaGVybm93LmNvbSIsCiAgICAgICAgICAibG9jYWx1c2VyQGRlY2lwaGVybm93LmNvbSIKICAgICAgICBdLAogICAgICAgICJvcmciOiBbCiAgICAgICAgICAid3d3LmRlY2lwaGVybm93LmNvbSIsICJpZWVlIgogICAgICAgIF0sCiAgICAgICAgInByaXZpbGVnZSI6IFsKICAgICAgICAgICJyb290IiwgInJlYWRvbmx5IgogICAgICAgIF0sCiAgICAgICAgInByb2plY3RzIjogWwogICAgICAgICAgImdtZGF0YXgiLCAiand0LXNlcnZlciIKICAgICAgICBdLAogICAgICAgICJjaXRpemVuc2hpcCI6IFsKICAgICAgICAgICJVUyIKICAgICAgICBdLAoJInByaXZzIjogWwogICAgICAgICAgImlfYW1fYV9yb2JvdCIKCV0sCiAgICAgICAgImFnZSI6IFsKICAgICAgICAgICJhZHVsdCIKICAgICAgICBdCiAgICAgIH0KICAgIH0KICBdCn0K
-    #volumes:
-    #  - ./users.json:/gm-jwt-security/etc/users.json
+        volumeMounts:
+        - mountPath: /gm-jwt-security/etc
+          name: users-json
+          readOnly: true
+      volumes:
+      - name: users-json
+        secret:
+          secretName: users-json
+          defaultMode: 420
+          items:
+          - key: users.json
+            path: users.json
 
 

@@ -111,6 +111,13 @@ kubectl create secret generic greymatter-core-repo \
 	--from-literal=known_hosts="$known_hosts" \
 	-n $PROJECT_NAMESPACE
 
+# not really a secret, but this is the list of users we have certificates for, and their attributes
+# todo: we need to generate the JWT signing secrets rather than checking them in, and gm-data need JWT_PUB to verify signatures
+_delete_secret "users-json"
+kubectl create secret generic users-json \
+	--from-file=users.json=./certs/users.json \
+	-n $PROJECT_NAMESPACE
+
 _delete_secret "sync-ssh-passphrase"
 kubectl create secret generic sync-ssh-passphrase --from-literal=passphrase="$SSH_PASSPHRASE" -n $PROJECT_NAMESPACE
 
