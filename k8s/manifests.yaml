@@ -48,18 +48,15 @@ spec:
           - mountPath: /etc/proxy/tls/sidecar
             name: edge-certs
             readOnly: true
+          volumeMounts:
+          - mountPath: /etc/proxy/tls/edge
+            name: edge-certs
+            readOnly: true
       volumes:
       - name: edge-certs
         secret:
           secretName: greymatter-edge-ingress
           defaultMode: 420
-          items:
-          - key: server.crt
-            path: server.crt
-          - key: server.key
-            path: server.key
-          - key: ca.crt
-            path: ca.crt
       imagePullSecrets:
       - name: greymatter-image-pull
 
