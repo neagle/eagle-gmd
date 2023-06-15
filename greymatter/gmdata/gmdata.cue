@@ -56,12 +56,12 @@ Gmdata: gsl.#Service & {
 		},
 		"egress-to-services": {
 			gsl.#HTTPListener
-			port: 10808
+			port: 10811
 			routes: {
 				"/jwt": {
 					prefix_rewrite: "/"
 					upstreams: {
-						"jwt": {
+						"jwt-server": {
 							namespace: context.globals.namespace
 							gsl.#Upstream
 						}

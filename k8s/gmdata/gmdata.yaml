@@ -41,11 +41,11 @@ spec:
         - name: DEFAULT_USER_DN
           value: "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
-          value: "jwt"
+          value: "127.0.0.1"
         - name: CLIENT_JWT_ENDPOINT_PORT
-          value: "8080"
+          value: "10811"
         - name: CLIENT_JWT_ENDPOINT_PREFIX
-          value: "/"
+          value: "/jwt"
         - name: JWT_API_KEY
           value: "Zm9vCg=="
         - name: JWT_PUB
