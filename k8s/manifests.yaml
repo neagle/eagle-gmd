@@ -53,7 +53,7 @@ spec:
         secret:
           secretName: greymatter-edge-ingress
           defaultMode: 420
-            items:
+          items:
           - key: server.crt
             path: server.crt
           - key: server.key
