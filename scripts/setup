@@ -91,9 +91,9 @@ kubectl create secret docker-registry greymatter-image-pull \
 # Create the ingress secret
 _delete_secret greymatter-edge-ingress
 kubectl create secret generic greymatter-edge-ingress \
-	--from-file=ca.crt=./certs/intermediate.crt \
-	--from-file=server.crt=./certs/localhost.crt \
-	--from-file=server.key=./certs/localhost.key \
+	--from-file=ca.crt=./certs/gmdata_ca_cert.pem \
+	--from-file=server.crt=./certs/gmdata_edge_cert.pem \
+	--from-file=server.key=./certs/gmdata_edge_key.pem \
 	-n $PROJECT_NAMESPACE
 
 # discard output to stderr
