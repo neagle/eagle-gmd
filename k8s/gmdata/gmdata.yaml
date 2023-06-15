@@ -36,8 +36,8 @@ spec:
         ports:
         - containerPort: 8181
         env:
-        - name: SLEEP_BEFORE_START
-          value: "5"
+        - name: LESS_CHATTY_INFO
+          value: "true"
         - name: DEFAULT_USER_DN
           value: "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
