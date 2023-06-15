@@ -12,13 +12,14 @@ spec:
     targetPort: 2181
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: zk
   namespace: gmdata
   annotations:
     "greymatter.io/inject-sidecar-to": "2181"
 spec:
+  serviceName: zk
   replicas: 1
   selector:
     matchLabels:

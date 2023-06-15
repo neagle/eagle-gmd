@@ -12,13 +12,14 @@ spec:
     targetPort: 9092
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefuleSet
 metadata:
   name: kafka
   namespace: gmdata
   annotations:
     "greymatter.io/inject-sidecar-to": "9092"
 spec:
+  serviceName: kafka
   replicas: 1
   selector:
     matchLabels:
