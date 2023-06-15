@@ -57,6 +57,13 @@ spec:
         secret:
           secretName: greymatter-edge-ingress
           defaultMode: 420
+            items:
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          - key: ca.crt
+            path: ca.crt
       imagePullSecrets:
       - name: greymatter-image-pull
 
