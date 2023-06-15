@@ -46,10 +46,24 @@ spec:
               value: "50000"
           volumeMounts:
           - mountPath: /etc/proxy/tls/sidecar
+            name: sidecar-certs
+            readOnly: true
+          - mountPath: /etc/proxy/tls/edge
             name: edge-certs
             readOnly: true
       volumes:
       - name: edge-certs
+        secret:
+          secretName: greymatter-edge-ingress
+          defaultMode: 420
+          items:
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          - key: ca.crt
+            path: ca.crt
+      - name: sidecar-certs
         secret:
           secretName: greymatter-edge-ingress
           defaultMode: 420
