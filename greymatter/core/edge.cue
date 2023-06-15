@@ -31,16 +31,16 @@ Edge: gsl.#Edge & {
                        port: 10809
                }
 
-                "gmdata-tls": {
+                "mtls": {
                         gsl.#MTLSListener & {
                                 ssl_config: {
                                         cert_key_pairs: [
                                                 {
-                                                        certificate_path: "/etc/proxy/tls/sidecar/server.crt"
-                                                        key_path:         "/etc/proxy/tls/sidecar/server.key"
+                                                        certificate_path: "/etc/proxy/tls/edge/server.crt"
+                                                        key_path:         "/etc/proxy/tls/edge/server.key"
                                                 },
                                         ]
-                                        trust_file: "/etc/proxy/tls/sidecar/ca.crt"
+                                        trust_file: "/etc/proxy/tls/edge/ca.crt"
                                 }
                         }
                         gsl.#HTTPListener
