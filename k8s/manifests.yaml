@@ -45,9 +45,6 @@ spec:
             - name: XDS_PORT
               value: "50000"
           volumeMounts:
-          - mountPath: /etc/proxy/tls/edge
-            name: edge-certs
-            readOnly: true
           - mountPath: /etc/proxy/tls/sidecar
             name: edge-certs
             readOnly: true
