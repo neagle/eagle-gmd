@@ -48,10 +48,6 @@ spec:
           - mountPath: /etc/proxy/tls/sidecar
             name: edge-certs
             readOnly: true
-          volumeMounts:
-          - mountPath: /etc/proxy/tls/edge
-            name: edge-certs
-            readOnly: true
       volumes:
       - name: edge-certs
         secret:
