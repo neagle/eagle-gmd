@@ -48,11 +48,25 @@ Gmdata: gsl.#Service & {
 	egress: {
 		"egress-to-mongo": {
 			gsl.#TCPListener
-
 			port: 27017
 			upstream: {
-				namespace: "gmdata"
+				namespace: context.globals.namespace
 				name:      "mongo"
+			}
+		},
+		"egress-to-services": {
+			gsl.#HTTPListener
+			port: 10808
+			routes: {
+				"/jwt": {
+					prefix_rewrite: "/"
+					upstreams: {
+						"jwt": {
+							namespace: context.globals.namespace
+							gsl.#Upstream
+						}
+					}
+				}
 			}
 		}
 	}
