@@ -38,8 +38,6 @@ spec:
         env:
         - name: LESS_CHATTY_INFO
           value: "true"
-        - name: DEFAULT_USER_DN
-          value: "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "127.0.0.1"
         - name: CLIENT_JWT_ENDPOINT_PORT
