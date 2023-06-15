@@ -36,11 +36,11 @@ Edge: gsl.#Edge & {
                                 ssl_config: {
                                         cert_key_pairs: [
                                                 {
-                                                        certificate_path: "/etc/proxy/tls/sidecar/server.pem"
-                                                        key_path:         "/etc/proxy/tls/sidecar/server-key.pem"
+                                                        certificate_path: "/etc/proxy/tls/sidecar/server.crt"
+                                                        key_path:         "/etc/proxy/tls/sidecar/server.key"
                                                 },
                                         ]
-                                        trust_file: "/etc/proxy/tls/sidecar/ca.pem"
+                                        trust_file: "/etc/proxy/tls/sidecar/ca.crt"
                                 }
                         }
                         gsl.#HTTPListener

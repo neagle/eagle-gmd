@@ -55,11 +55,11 @@ spec:
           defaultMode: 420
           items:
           - key: server.crt
-            path: server.pem
+            path: server.crt
           - key: server.key
-            path: server-key.pem
+            path: server.key
           - key: ca.crt
-            path: ca.pem
+            path: ca.crt
       imagePullSecrets:
       - name: greymatter-image-pull
 
