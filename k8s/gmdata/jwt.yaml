@@ -45,7 +45,6 @@ spec:
         - mountPath: /gm-jwt-security/etc
           name: users-json
           readOnly: true
-        volumeMounts:
         - mountPath: /gm-jwt-security/certs
           name: jwt-keys
           readOnly: true
