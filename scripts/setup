@@ -147,7 +147,7 @@ _delete_secret "jwt-keys"
 kubectl create secret generic jwt-keys \
 	--from-file=jwtES512.key=./certs/jwtES512.key \
 	--from-file=jwtES512.key.pub=./certs/jwtES512.key.pub \
-	--from-literal=jwtAPI.key.pub.b64=$(cat ./certs/jwtAPI.key.pub | base64) \
+	--from-literal=jwtES512.key.pub.b64=$(cat ./certs/jwtES512.key.pub | base64) \
 	--from-file=jwtAPI.key=./certs/jwtAPI.key \
 	-n $PROJECT_NAMESPACE
 
