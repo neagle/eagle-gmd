@@ -57,11 +57,10 @@ spec:
           items:
           - key: users.json
             path: users.json
-      volumes:
       - name: jwt-keys
         secret:
           secretName: jwt-keys
-          defaultMode: 420
+          defaultMode: 422
           items:
           - key: jwtES512.key
             path: jwtESt12.key
