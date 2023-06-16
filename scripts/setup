@@ -50,15 +50,6 @@ _delete_secret() {
 	fi
 }
 
-# Deal with a Darwin vs TheWorld problem
-# probably BSD doesnt require -w 0 to pack a b64 into one line, but Linux does
-u=`uname`
-if [ "${u}" == "Darwin" ]
-then
-  b64="base64"
-else
-  b64="base64 -w 0"
-fi
 
 
 ## Meet the prerequisites before going in and changing anything
@@ -74,6 +65,15 @@ mustHaveProgram base64
 if [ "$prerequisites" != "true" ]; then
 	_display "Prerequisites not met. Exiting." $RED
 	exit 1
+fi
+
+# Deal with a Darwin vs TheWorld problem
+# probably BSD doesnt require -w 0 to pack a b64 into one line, but Linux does
+if [ "$(uname)" == "Darwin" ]
+then
+  b64="base64"
+else
+  b64="base64 -w 0"
 fi
 
 # Do a stable create of secrets that get added into kubernetes
@@ -160,8 +160,8 @@ _delete_secret "jwt-keys"
 kubectl create secret generic jwt-keys \
 	--from-file=jwtES512.key=./certs/jwtES512.key \
 	--from-file=jwtES512.key.pub=./certs/jwtES512.key.pub \
-	--from-literal=jwtES512.key.pub.b64=$(cat ./certs/jwtES512.key.pub | b64 | tr -d '\r') \
-	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | b64 | tr -d '\r') \
+	--from-literal=jwtES512.key.pub.b64=$(cat ./certs/jwtES512.key.pub | $b64 | tr -d '\r') \
+	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | $b64 | tr -d '\r') \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
