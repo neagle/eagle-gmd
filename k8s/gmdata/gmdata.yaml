@@ -48,12 +48,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: jwt-keys
-              key: jwtAPI.key.b64
+              key: jwtAPI.key
         - name: JWT_PUB
           valueFrom:
             secretKeyRef:
               name: jwt-keys
-              key: jwtES512.key.pub
+              key: jwtES512.key.pub.b64
         - name: CLIENT_PREFIX
           value: ""
         - name: CLIENT_USE_TLS

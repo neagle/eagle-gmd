@@ -147,8 +147,8 @@ _delete_secret "jwt-keys"
 kubectl create secret generic jwt-keys \
 	--from-file=jwtES512.key=./certs/jwtES512.key \
 	--from-file=jwtES512.key.pub=./certs/jwtES512.key.pub \
+	--from-literal=jwtAPI.key.pub.b64=$(cat ./certs/jwtAPI.key.pub | base64) \
 	--from-file=jwtAPI.key=./certs/jwtAPI.key \
-	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | base64) \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
