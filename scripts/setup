@@ -57,6 +57,7 @@ mustBeSet "GREYMATTER_REGISTRY_PASSWORD"
 mustHaveProgram kubectl
 mustHaveProgram ssh-keyscan
 mustHaveProgram openssl
+mustHaveProgram base64
 
 ## Make the new cluster in the target namespace. Avoid 6999 and 443 port conflicts
 if [ "$prerequisites" != "true" ]; then
@@ -147,6 +148,7 @@ kubectl create secret generic jwt-keys \
 	--from-file=jwtES512.key=./certs/jwtES512.key \
 	--from-file=jwtES512.key.pub=./certs/jwtES512.key.pub \
 	--from-file=jwtAPI.key=./certs/jwtAPI.key \
+	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | base64) \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
