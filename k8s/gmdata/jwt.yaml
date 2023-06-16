@@ -61,8 +61,8 @@ spec:
           defaultMode: 420
           items:
           - key: jwtES512.pub
-          - key: jwtES512.pub
-            path: jwtESt12.pub.key
+            path: jwtESt12.pub
+          - key: jwtES512.pub.key
             path: jwtESt12.pub.key
 
 
