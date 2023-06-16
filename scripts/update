@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Get color variables
+source "${BASH_SOURCE%/*}/_colors"
+
+_display "Applying k9s..."
+
+# apply all yaml files in k8s recursively
+find ./k8s -name \*.yaml -exec kubectl apply -f {} \;
