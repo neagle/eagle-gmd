@@ -61,7 +61,7 @@ Gmdata: gsl.#Service & {
 				"/jwt": {
 					prefix_rewrite: "/"
 					upstreams: {
-						"jwt-service": {
+						"jwt-security": {
 							namespace: context.globals.namespace
 							gsl.#Upstream
 						}
