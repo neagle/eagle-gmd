@@ -16,7 +16,7 @@ Gmdata: gsl.#Service & {
 	display_name:              "gmdata"
 	version:                   "v1.0.0"
 	description:               "Data... to the MAX!"
-	api_endpoint:              "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
+	api_endpoint:              "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/static/ui"
 	api_spec_endpoint:         "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: false
 	enable_instance_metrics:   false
