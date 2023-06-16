@@ -48,7 +48,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: jwt-keys
-              key: jwtAPI.key
+              key: jwtAPI.key.b64
         - name: JWT_PUB
           valueFrom:
             secretKeyRef:

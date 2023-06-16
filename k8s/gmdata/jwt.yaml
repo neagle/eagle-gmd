@@ -40,7 +40,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: jwt-keys
-              key: jwtAPI.key
+              key: jwtAPI.key.b64
         volumeMounts:
         - mountPath: /gm-jwt-security/etc
           name: users-json
@@ -59,12 +59,12 @@ spec:
       - name: jwt-keys
         secret:
           secretName: jwt-keys
-          defaultMode: 422
+          defaultMode: 420
           items:
           - key:  jwtES512.key
             path: jwtES512.key
           - key:  jwtES512.key.pub
             path: jwtES512.key.pub
-          - key:  jwtAPI.key
-            path: jwtAPI.key
+          - key:  jwtAPI.key.b64
+            path: jwtAPI.key.b64
 
