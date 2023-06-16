@@ -16,34 +16,34 @@ Gmdata: gsl.#Service & {
 	display_name:              "gmdata"
 	version:                   "v1.0.0"
 	description:               "Data... to the MAX!"
-	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
-	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
+	api_endpoint:              "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
+	api_spec_endpoint:         "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: false
 	enable_instance_metrics:   false
 	business_impact:           "high"
 	owner:                     "greymatter"
 	capability:                "data"
 
-        ingress: {
-                (name): {
-                        gsl.#HTTPListener
+	ingress: {
+		(name): {
+			gsl.#HTTPListener
 
-                        routes: {
-                                "/": {
-                                        upstreams: {
-                                                "local": {
-                                                        instances: [
-                                                                {
-                                                                        host: "127.0.0.1"
-                                                                        port: 8181
-                                                                },
-                                                        ]
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
+			routes: {
+				"/": {
+					upstreams: {
+						"local": {
+							instances: [
+								{
+									host: "127.0.0.1"
+									port: 8181
+								},
+							]
+						}
+					}
+				}
+			}
+		}
+	}
 
 	egress: {
 		"egress-to-mongo": {
@@ -53,7 +53,7 @@ Gmdata: gsl.#Service & {
 				namespace: context.globals.namespace
 				name:      "mongo"
 			}
-		},
+		}
 		"egress-to-services": {
 			gsl.#HTTPListener
 			port: 10811

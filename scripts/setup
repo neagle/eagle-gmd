@@ -119,6 +119,7 @@ kubectl create secret generic users-json \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
+_display SSH_PASSPHRASE "$SSH_PASSPHRASE"
 kubectl create secret generic sync-ssh-passphrase --from-literal=passphrase="$SSH_PASSPHRASE" -n $PROJECT_NAMESPACE
 
 _display "Applying k8s..."
