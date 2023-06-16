@@ -26,11 +26,6 @@ spec:
         - name: PORT
           value: "8080"
         # This is the public key that users of this JWT must recognize
-        - name: JWT_PUB
-          value: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCSUVrNGpHL1FEMkZwNURxcmMrTzFPVy9CaG1BLwpKcmgyRFRaRWpybEZONnJYbTA0Vms0bUluNENZSmJ0VDdIQjc2cVJIeE9DNTFORVk0eFZHb1RUUVZta0Fnc3ljCllVdEdqZ3pKQUdTZExsSXZKSmtabWkrSjZBbWVtNng5UFZkajcxc2hHSnhNdjM4SDFTa2RRS29EZmllS3dZbFIKNENPUWFxdXdJVEpPYWd2R1VUQT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
-        # This is the signing key for the JWTs
-        - name: PRIVATE_KEY
-          value: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1JSGNBZ0VCQkVJQUludTVqbEdaU2Z6M2dMOWczOVNoeE5UaWtUQ0lvUWtFVVUyckdnV1ZJTm9TN3RlM2d1Uk8KK2VKb3FDZTd0Z3pKL1RZcGVxU055elE2UGVTS2JmZC91K2FnQndZRks0RUVBQ09oZ1lrRGdZWUFCQUVnU1RpTQpiOUFQWVdua09xdHo0N1U1YjhHR1lEOG11SFlOTmtTT3VVVTNxdGViVGhXVGlZaWZnSmdsdTFQc2NIdnFwRWZFCjRMblUwUmpqRlVhaE5OQldhUUNDekp4aFMwYU9ETWtBWkowdVVpOGttUm1hTDRub0NaNmJySDA5VjJQdld5RVkKbkV5L2Z3ZlZLUjFBcWdOK0o0ckJpVkhnSTVCcXE3QWhNazVxQzhaUk1BPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=
         - name: TOKEN_EXP_TIME
           value: "30000"
         # Don't use Redis. It causes problems, especially because it writes plaintext to the network without a TCP tunnel, and isn't necessary.
@@ -47,6 +42,10 @@ spec:
         - mountPath: /gm-jwt-security/etc
           name: users-json
           readOnly: true
+        volumeMounts:
+        - mountPath: /gm-jwt-security/certs
+          name: jwt-keys
+          readOnly: true
       volumes:
       - name: users-json
         secret:
@@ -55,5 +54,15 @@ spec:
           items:
           - key: users.json
             path: users.json
+      volumes:
+      - name: jwt-keys
+        secret:
+          secretName: jwt-keys
+          defaultMode: 420
+          items:
+          - key: jwtES512.pub
+          - key: jwtES512.pub
+            path: jwtESt12.pub.key
+            path: jwtESt12.pub.key
 
 

@@ -7,3 +7,5 @@ certs/*.srl
 certs/*.crl
 certs/exts
 certs/openssl.cfg
+certs/jwtES512.pub
+certs/jwtES512.pub.key

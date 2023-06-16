@@ -56,11 +56,25 @@ mustBeSet "GREYMATTER_REGISTRY_USERNAME"
 mustBeSet "GREYMATTER_REGISTRY_PASSWORD"
 mustHaveProgram kubectl
 mustHaveProgram ssh-keyscan
+mustHaveProgram openssl
 
 ## Make the new cluster in the target namespace. Avoid 6999 and 443 port conflicts
 if [ "$prerequisites" != "true" ]; then
 	_display "Prerequisites not met. Exiting." $RED
 	exit 1
+fi
+
+if [[ -f ./certs/gmdata-ca-cert.pem ]]; then
+	_display "Certs are already created"
+else
+	_display "Certs need to be created"
+	./certs/makecerts
+fi
+if [[ -f ./certs/jwtES512.pub ]]; then
+	_display "JWT signing keys exist"
+else
+	_display "JWT keys need to be created"
+	./certs/makejwt
 fi
 
 PRIVATE_KEY=${PRIVATE_KEY:-$(echo ~/).ssh/id_rsa}
@@ -116,6 +130,11 @@ kubectl create secret generic greymatter-core-repo \
 _delete_secret "users-json"
 kubectl create secret generic users-json \
 	--from-file=users.json=./certs/users.json \
+	-n $PROJECT_NAMESPACE
+_delete_secret "jwt-keys"
+kubectl create secret generic jwt-keys \
+	--from-file=jwtES512.pub=./certs/jwtES512.pub \
+	--from-file=jwtES512.pub.key=./certs/jwtES512.pub.key \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
