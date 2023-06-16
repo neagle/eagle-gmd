@@ -64,7 +64,7 @@ if [ "$prerequisites" != "true" ]; then
 	exit 1
 fi
 
-if [[ -f ./certs/gmdata-ca-cert.pem ]]; then
+if [[ -f ./certs/gmdata_ca_cert.pem ]]; then
 	_display "Certs are already created"
 else
 	_display "Certs need to be created"
