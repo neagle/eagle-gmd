@@ -76,6 +76,7 @@ if [ "$prerequisites" != "true" ]; then
 	exit 1
 fi
 
+# Do a stable create of secrets that get added into kubernetes
 if [[ -f ./certs/gmdata_ca_cert.pem ]]; then
 	_display "Certs are already created"
 else
@@ -159,8 +160,8 @@ _delete_secret "jwt-keys"
 kubectl create secret generic jwt-keys \
 	--from-file=jwtES512.key=./certs/jwtES512.key \
 	--from-file=jwtES512.key.pub=./certs/jwtES512.key.pub \
-	--from-literal=jwtES512.key.pub.b64=$(cat ./certs/jwtES512.key.pub | b64) \
-	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | b64) \
+	--from-literal=jwtES512.key.pub.b64=$(cat ./certs/jwtES512.key.pub | b64 | tr -d '\r') \
+	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | b64 | tr -d '\r') \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
