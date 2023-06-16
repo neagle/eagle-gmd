@@ -87,4 +87,11 @@ spec:
             #  value: "gmdatax-audit"
             #- name: KAFKA_TOPIC_UPDATE
             #  value: "gmdatax-replicationlog"
+        volumeMounts:
+        - name: gmdata-storage
+          mountPath: /buckets
+      volumes:
+      - name: gmdata-storage
+        persistentVolumeClaim:
+          claimName: gmdata-pvc
            

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pvc
+  name: gmdata-pvc
   namespace: gmdata
 spec:
   accessModes:
