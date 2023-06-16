@@ -76,6 +76,12 @@ else
 	_display "JWT keys need to be created"
 	./certs/makejwt
 fi
+if [[ -f ./certs/gmdata_master.key ]]; then
+	_display "using existing masterkey"
+else
+  _display "creating masterkey"
+  openssl rand -hex 32 > ./certs/gmdata_master.key
+fi
 
 PRIVATE_KEY=${PRIVATE_KEY:-$(echo ~/).ssh/id_rsa}
 # Check if the file exists and is a regular file. If not, exit with an error message.
@@ -125,16 +131,22 @@ kubectl create secret generic greymatter-core-repo \
 	--from-literal=known_hosts="$known_hosts" \
 	-n $PROJECT_NAMESPACE
 
-# not really a secret, but this is the list of users we have certificates for, and their attributes
-# todo: we need to generate the JWT signing secrets rather than checking them in, and gm-data need JWT_PUB to verify signatures
+
+_delete_secret "gmdata-masterkey"
+kubectl create secret generic gmdata-masterkey \
+	--from-file=masterkey=./certs/gmdata_master.key \
+	-n $PROJECT_NAMESPACE
+
+
 _delete_secret "users-json"
 kubectl create secret generic users-json \
 	--from-file=users.json=./certs/users.json \
 	-n $PROJECT_NAMESPACE
 _delete_secret "jwt-keys"
 kubectl create secret generic jwt-keys \
-	--from-file=jwtES512.pub=./certs/jwtES512.pub \
-	--from-file=jwtES512.pub.key=./certs/jwtES512.pub.key \
+	--from-file=jwtES512.key=./certs/jwtES512.key \
+	--from-file=jwtES512.key.pub=./certs/jwtES512.key.pub \
+	--from-file=jwtAPI.key=./certs/jwtAPI.key \
 	-n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"

@@ -37,7 +37,10 @@ spec:
           value: debug
         # The secret required to use this service. It has to be a b64 value for some reason.
         - name: JWT_API_KEY
-          value: Zm9vCg==
+          valueFrom:
+            secretKeyRef:
+              name: jwt-keys
+              key: jwtAPI.key
         volumeMounts:
         - mountPath: /gm-jwt-security/etc
           name: users-json
@@ -60,9 +63,10 @@ spec:
           secretName: jwt-keys
           defaultMode: 420
           items:
-          - key: jwtES512.pub
-            path: jwtESt12.pub
-          - key: jwtES512.pub.key
-            path: jwtESt12.pub.key
-
+          - key: jwtES512.key
+            path: jwtESt12.key
+          - key: jwtES512.key.pub
+            path: jwtESt12.key.pub
+          - key: jwtAPI.key
+            path: jwtAPI.key
 

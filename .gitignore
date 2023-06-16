@@ -7,5 +7,7 @@ certs/*.srl
 certs/*.crl
 certs/exts
 certs/openssl.cfg
-certs/jwtES512.pub
-certs/jwtES512.pub.key
+certs/jwtES512.key
+certs/jwtES512.key.pub
+certs/jwtAPI.key
+certs/gmdata_master.key

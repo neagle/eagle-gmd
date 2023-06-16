@@ -45,9 +45,15 @@ spec:
         - name: CLIENT_JWT_ENDPOINT_PREFIX
           value: "/jwt"
         - name: JWT_API_KEY
-          value: "Zm9vCg=="
+          valueFrom:
+            secretKeyRef:
+              name: jwt-keys
+              key: jwtAPI.key
         - name: JWT_PUB
-          value: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCSUVrNGpHL1FEMkZwNURxcmMrTzFPVy9CaG1BLwpKcmgyRFRaRWpybEZONnJYbTA0Vms0bUluNENZSmJ0VDdIQjc2cVJIeE9DNTFORVk0eFZHb1RUUVZta0Fnc3ljCllVdEdqZ3pKQUdTZExsSXZKSmtabWkrSjZBbWVtNng5UFZkajcxc2hHSnhNdjM4SDFTa2RRS29EZmllS3dZbFIKNENPUWFxdXdJVEpPYWd2R1VUQT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
+          valueFrom:
+            secretKeyRef:
+              name: jwt-keys
+              key: jwtES512.key.pub
         - name: CLIENT_PREFIX
           value: ""
         - name: CLIENT_USE_TLS
@@ -61,7 +67,10 @@ spec:
         - name: GMDATA_NAMESPACE_USERFIELD
           value: "email"
         - name: MASTERKEY
-          value: "as8f0safd80fa8e09ae809ae80ae80fea80efa08fa08aef8f0e80ae"
+          valueFrom:
+            secretKeyRef:
+              name: gmdata-masterkey
+              key: masterkey
         - name: FILE_BUCKET
           value: "decipherers"
         - name: FILE_PARTITION
@@ -78,4 +87,4 @@ spec:
             #  value: "gmdatax-audit"
             #- name: KAFKA_TOPIC_UPDATE
             #  value: "gmdatax-replicationlog"
-
+           

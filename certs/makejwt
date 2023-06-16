@@ -5,4 +5,5 @@
 cd "${0%/*}" 
 openssl ecparam -genkey -name secp521r1 -noout -out jwtES512.key
 openssl ec -in jwtES512.key -pubout -out jwtES512.key.pub
+openssl rand -hex 12 | base64 > jwtAPI.key
 )
