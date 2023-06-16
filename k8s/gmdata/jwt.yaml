@@ -61,10 +61,10 @@ spec:
           secretName: jwt-keys
           defaultMode: 422
           items:
-          - key: jwtES512.key
-            path: jwtESt12.key
-          - key: jwtES512.key.pub
-            path: jwtESt12.key.pub
-          - key: jwtAPI.key
+          - key:  jwtES512.key
+            path: jwtES512.key
+          - key:  jwtES512.key.pub
+            path: jwtES512.key.pub
+          - key:  jwtAPI.key
             path: jwtAPI.key
 
