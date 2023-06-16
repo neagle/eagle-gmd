@@ -146,7 +146,7 @@ kubectl create secret generic greymatter-core-repo \
 
 _delete_secret "gmdata-masterkey"
 kubectl create secret generic gmdata-masterkey \
-	--from-file=masterkey=./certs/gmdata_master.key \
+	--from-literal=masterkey=$(cat ./certs/gmdata_master.key) \
 	-n $PROJECT_NAMESPACE
 
 
