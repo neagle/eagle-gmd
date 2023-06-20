@@ -111,6 +111,13 @@ kubectl create namespace $PROJECT_NAMESPACE --dry-run=client -o yaml | kubectl a
 # operator namespace setup
 kubectl create namespace gm-operator --dry-run=client -o yaml | kubectl apply -f -
 
+_display "Create per-branch sync config"
+kubectl delete configmap greymatter-sync-config
+kubectl create configmap greymatter-sync-config \
+	--from-literal=GREYMATTER_GIT_REMOTE=$(git remote get-url origin) \
+	--from-literal=GREYMATTER_GIT_BRANCH=$(git branch --show) \
+	-n $PROJECT_NAMESPACE
+
 _display "Creating secrets..."
 
 _delete_secret "greymatter-image-pull"
