@@ -9,6 +9,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  # Use the default
-  # storageClassName: 
+  storageClassName: "local-path" 
 
