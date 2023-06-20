@@ -34,7 +34,6 @@ spec:
           "sync", 
           "--ssh-private-key", "/var/lib/greymatter/.ssh/ssh-private-key", 
           "--git", "--forever", 
-          "--branch", "main",
           "--interval", "3s", 
           "--git-dir", "/var/lib/greymatter/checkout", 
           "--redis-addr", "greymatter-datastore.greymatter.svc.cluster.local:6379",
@@ -66,6 +65,11 @@ spec:
               name: greymatter-admin-sync
               key: redis_password
               optional: true
+        - name: GREYMATTER_GIT_BRANCH
+          valueFrom:
+            configMapKeyRef:
+              name: greymatter-sync-config
+              key: GREYMATTER_GIT_BRANCH
         - name: GREYMATTER_GIT_REMOTE
           valueFrom:
             configMapKeyRef:
@@ -88,3 +92,4 @@ metadata:
 data:
   # property-like keys; each key maps to a simple value
   GREYMATTER_GIT_REMOTE: "git@github.com:neagle/eagle-gmd.git"
+  GREYMATTER_GIT_BRANCH: "main"
