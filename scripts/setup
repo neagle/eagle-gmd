@@ -49,6 +49,14 @@ _delete_secret() {
 		kubectl delete secret $1 -n $PROJECT_NAMESPACE
 	fi
 }
+ 
+# Delete configmap nicely so that we don't get errors if they don't exist
+_delete_configmap() {
+	if kubectl get configmap $1 -n $PROJECT_NAMESPACE &>/dev/null; then
+		_display "Resetting existing configmap: $1..."
+		kubectl delete configmap $1 -n $PROJECT_NAMESPACE
+	fi
+}
 
 
 
@@ -112,7 +120,7 @@ kubectl create namespace $PROJECT_NAMESPACE --dry-run=client -o yaml | kubectl a
 kubectl create namespace gm-operator --dry-run=client -o yaml | kubectl apply -f -
 
 _display "Create per-branch sync config"
-kubectl delete configmap greymatter-sync-config
+_delete_configmap "greymatter-sync-config"
 kubectl create configmap greymatter-sync-config \
 	--from-literal=GREYMATTER_GIT_REMOTE=$(git remote get-url origin) \
 	--from-literal=GREYMATTER_GIT_BRANCH=$(git branch --show) \
