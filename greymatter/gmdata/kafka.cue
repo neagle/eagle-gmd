@@ -42,6 +42,17 @@ Kafka: gsl.#Service & {
 		}
 	}
 
+        egress: {
+                "egress-to-zk": {
+                        gsl.#TCPListener
+                        port: 2181
+                        upstream: {
+                                namespace: context.globals.namespace
+                                name:      "zk"
+                        }
+                }
+        }
+
 	// Looking to make your tcp service accessible from the edge?
 	// You must open a new listener on the edge whose upstream name
 	// refers to this service's name.
