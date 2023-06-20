@@ -50,8 +50,8 @@ spec:
           readOnly: true
       volumes:
       - name: users-json
-        secret:
-          secretName: users-json
+        configMap:
+          name: users-json
           defaultMode: 420
           items:
           - key: users.json

@@ -166,10 +166,6 @@ kubectl create secret generic gmdata-masterkey \
 	-n $PROJECT_NAMESPACE
 
 
-_delete_secret "users-json"
-kubectl create secret generic users-json \
-	--from-file=users.json=./certs/users.json \
-	-n $PROJECT_NAMESPACE
 _delete_secret "jwt-keys"
 # using b64 ensures that we don't stick a cr onto the end of the secret, a problem with the tools
 kubectl create secret generic jwt-keys \
@@ -178,6 +174,9 @@ kubectl create secret generic jwt-keys \
 	--from-literal=jwtES512.key.pub.b64=$(cat ./certs/jwtES512.key.pub | $b64 | tr -d '\r') \
 	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | $b64 | tr -d '\r') \
 	-n $PROJECT_NAMESPACE
+
+_delete_configmap "Creating the user database"
+kubectl create configmap users-json --from-file=users.json=./certs/users.json -n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
 _display SSH_PASSPHRASE "$SSH_PASSPHRASE"
