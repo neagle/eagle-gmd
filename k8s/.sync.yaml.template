@@ -1,0 +1,90 @@
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: greymatter-sync
+  namespace: gmdata
+spec:
+  selector:
+    matchLabels:
+      app: greymatter-sync
+  serviceName: "greymatter-sync"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: greymatter-sync
+    spec:
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+      - name: greymatter-image-pull
+      volumes:
+      - name: greymatter-admin-sync
+        secret:
+          secretName: greymatter-admin-sync
+      containers:
+      - name: greymatter-sync
+        image: greymatter.jfrog.io/oci/greymatter-cli:4.8.1-beta1
+        imagePullPolicy: Always
+        command: ["/usr/local/bin/greymatter"]
+        args: [
+          "--api", "http://controlensemble.greymatter.svc.cluster.local:5555", 
+          "--catalog", "http://catalog.greymatter.svc.cluster.local:8080", 
+          "sync", 
+          "--ssh-private-key", "/var/lib/greymatter/.ssh/ssh-private-key", 
+          "--git", "--forever", 
+          "--branch", "${BRANCH}",
+          "--interval", "3s", 
+          "--git-dir", "/var/lib/greymatter/checkout", 
+          "--redis-addr", "greymatter-datastore.greymatter.svc.cluster.local:6379",
+          "--redis-db", "0"
+        ]
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "512Mi"
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: greymatter-admin-sync
+          readOnly: true
+          mountPath: "/var/lib/greymatter/.ssh"
+        env:
+        - name: SSH_KNOWN_HOSTS
+          value: "/var/lib/greymatter/.ssh/known_hosts"
+        - name: GREYMATTER_REDIS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: greymatter-admin-sync
+              key: redis_user 
+              optional: true
+        - name: GREYMATTER_REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: greymatter-admin-sync
+              key: redis_password
+              optional: true
+        - name: GREYMATTER_GIT_REMOTE
+          valueFrom:
+            configMapKeyRef:
+              name: greymatter-sync-config
+              key: GREYMATTER_GIT_REMOTE
+        - name: GREYMATTER_SSH_PASSPHRASE
+          valueFrom:
+            secretKeyRef:
+              name: sync-ssh-passphrase
+              key: passphrase
+              optional: true
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: greymatter-sync-config
+  namespace: gmdata
+data:
+  # property-like keys; each key maps to a simple value
+  GREYMATTER_GIT_REMOTE: "git@github.com:neagle/eagle-gmd.git"
