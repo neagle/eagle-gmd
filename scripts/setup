@@ -175,7 +175,7 @@ kubectl create secret generic jwt-keys \
 	--from-literal=jwtAPI.key.b64=$(cat ./certs/jwtAPI.key | $b64 | tr -d '\r') \
 	-n $PROJECT_NAMESPACE
 
-_delete_configmap "Creating the user database"
+_delete_configmap "users-json"
 kubectl create configmap users-json --from-file=users.json=./certs/users.json -n $PROJECT_NAMESPACE
 
 _delete_secret "sync-ssh-passphrase"
