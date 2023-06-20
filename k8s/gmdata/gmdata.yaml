@@ -82,7 +82,7 @@ spec:
         - name: MONGODB
           value: "chili"
         - name: KAFKA_PEERS
-          value: "kafka:9092"
+          value: "127.0.0.1:9092"
         - name: KAFKA_TOPIC_READ
           value: "gmdatax-audit"
         - name: KAFKA_TOPIC_UPDATE
