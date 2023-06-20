@@ -54,6 +54,22 @@ Gmdata: gsl.#Service & {
 				name:      "mongo"
 			}
 		}
+		"egress-to-kafka": {
+			gsl.#TCPListener
+			port: 9092
+			upstream: {
+				namespace: context.globals.namespace
+				name:      "kafka"
+			}
+		}
+		"egress-to-zk": {
+			gsl.#TCPListener
+			port: 2181
+			upstream: {
+				namespace: context.globals.namespace
+				name:      "zk"
+			}
+		}
 		"egress-to-services": {
 			gsl.#HTTPListener
 			port: 10811
