@@ -32,4 +32,10 @@ spec:
           value: 127.0.0.1:2181
         - name: KAFKA_CREATE_TOPICS
           value: gmdatax-audit:1:1,gmdatax-replicationlog:1:1
-
+        volumeMounts:
+        - name: kafka-storage
+          mountPath: /opt/kafka/data
+      volumes:
+      - name: kafka-storage
+        persistentVolumeClaim:
+          claimName: kafka-pvc
