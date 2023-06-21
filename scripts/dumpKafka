@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl exec --tty --stdin -n gmdata kafka-0 -- /opt/kafka/bin/kafka-console-consumer.sh --topic gmdatax-update --from-beginning --bootstrap-server 127.0.0.1:9092
+kubectl exec --tty --stdin -n gmdata kafka-0 -- /opt/kafka/bin/kafka-console-consumer.sh --topic gmdatax-replicationlog --from-beginning --bootstrap-server 127.0.0.1:9092
