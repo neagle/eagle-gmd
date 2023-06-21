@@ -19,8 +19,8 @@ Jwt: gsl.#Service & {
 	description:               "JWT security service for gmdata"
 	api_endpoint:              "/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "/services/\(context.globals.namespace)/\(name)/"
-	enable_historical_metrics: false
-	enable_instance_metrics:   false
+	enable_historical_metrics: true
+	enable_instance_metrics:   true
 	business_impact:           "high"
 	owner:                     "gmdata"
 	capability:                ""

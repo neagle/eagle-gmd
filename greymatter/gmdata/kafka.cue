@@ -18,8 +18,8 @@ Kafka: gsl.#Service & {
 	description:               "EDIT ME"
 	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
-	enable_historical_metrics: false
-	enable_instance_metrics:   false
+	enable_historical_metrics: true
+	enable_instance_metrics:   true
 	business_impact:           "low"
 	owner:                     "gmdata"
 	capability:                ""
