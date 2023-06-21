@@ -34,7 +34,7 @@ spec:
           value: gmdatax-audit:1:1,gmdatax-replicationlog:1:1
         volumeMounts:
         - name: kafka-storage
-          mountPath: /opt/kafka/data
+          mountPath: /kafka
       volumes:
       - name: kafka-storage
         persistentVolumeClaim:
