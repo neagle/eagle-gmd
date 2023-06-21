@@ -23,7 +23,7 @@ spec:
         - containerPort: 2181
         volumeMounts:
         - name: zk-storage
-          mountPath: /opt/zookeeper/data
+          mountPath: /opt/zookeeper-3.4.13/data
       volumes:
       - name: zk-storage
         persistentVolumeClaim:
