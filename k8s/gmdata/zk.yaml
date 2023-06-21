@@ -21,4 +21,10 @@ spec:
         image: wurstmeister/zookeeper:latest
         ports:
         - containerPort: 2181
-
+        volumeMounts:
+        - name: zk-storage
+          mountPath: /opt/zookeeper/data
+      volumes:
+      - name: zk-storage
+        persistentVolumeClaim:
+          claimName: zk-pvc
