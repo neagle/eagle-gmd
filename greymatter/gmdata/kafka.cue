@@ -28,7 +28,10 @@ Kafka: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#TCPListener
-
+			gsl.#SpireListener & {
+				#context: context.SpireContext
+				#subjects: ["gmdata-gmdata"]
+			}
 			upstream: {
 				gsl.#Upstream
 				name: "local"
@@ -42,15 +45,19 @@ Kafka: gsl.#Service & {
 		}
 	}
 
-        egress: {
-                "egress-to-zk": {
-                        gsl.#TCPListener
-                        port: 2181
-                        upstream: {
-                                namespace: context.globals.namespace
-                                name:      "zk"
-                        }
-                }
+    egress: {
+            "egress-to-zk": {
+                    gsl.#TCPListener
+                    port: 2181
+                    upstream: {
+                        namespace: context.globals.namespace
+                        name:      "zk"
+						gsl.#SpireUpstream & {
+							#context: context.SpireContext
+							#subjects: ["gmdata-gmdata"]
+						}							
+                    }
+            }
         }
 
 	// Looking to make your tcp service accessible from the edge?

@@ -51,20 +51,19 @@ Jwt: gsl.#Service & {
 	}
 
     edge: {
-            edge_name: "edge"
-            routes: "/services/\(context.globals.namespace)/\(name)": {
-                    prefix_rewrite: "/"
-                    upstreams: (name): {
-                        gsl.#Upstream
-                        namespace: context.globals.namespace
-						gsl.#SpireUpstream & {
-							#context: context.SpireContext
-							#subjects: ["gmdata-edge"]
-						}                  
-					}
-                }
+        edge_name: "edge"
+        routes: "/services/\(context.globals.namespace)/\(name)": {
+            prefix_rewrite: "/"
+            upstreams: (name): {
+                gsl.#Upstream
+    	        namespace: context.globals.namespace
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-edge"]
+				}                  
+			}
         }
-
+    }
 }
 
 exports: "jwt": Jwt
