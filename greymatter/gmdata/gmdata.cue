@@ -97,6 +97,10 @@ Gmdata: gsl.#Service & {
 			upstreams: (name): {
 				gsl.#Upstream
 				namespace: context.globals.namespace
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-gmdata"]
+				}
 			}
 		}
 	}

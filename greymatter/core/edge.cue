@@ -19,7 +19,7 @@ Edge: gsl.#Edge & {
 	name:            "edge"
 	display_name:    "Eagle GMD Edge"
 	version:         "v1.8.1"
-	description:     "Edge ingress for gmdata"
+	description:     "Edge ingress for gmdata namespace"
 	business_impact: "high"
 	owner:           "Nate Eagle"
 	capability:      ""
