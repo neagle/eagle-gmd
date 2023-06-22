@@ -68,6 +68,7 @@ mustHaveProgram kubectl
 mustHaveProgram ssh-keyscan
 mustHaveProgram openssl
 mustHaveProgram base64
+mustHaveProgram tr
 
 ## Make the new cluster in the target namespace. Avoid 6999 and 443 port conflicts
 if [ "$prerequisites" != "true" ]; then
@@ -91,7 +92,7 @@ else
 	_display "Certs need to be created"
 	./certs/makecerts
 fi
-if [[ -f ./certs/jwtES512.pub ]]; then
+if [[ -f ./certs/jwtES512.key ]]; then
 	_display "JWT signing keys exist"
 else
 	_display "JWT keys need to be created"

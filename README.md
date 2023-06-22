@@ -23,4 +23,10 @@ for a user into your web browser. They all have password `greymatter`.
 ./scripts/setup
 ```
 
+# The GM-Data Service
 
+- If you want to use S3 for buckets with gm-data, set `USES3=true`, the `AWS_S3_BUCKET`, and AWS creds in `k8s/gmdata/gmdata.yaml`.
+  For real deployments, you want this so that storage is limitless with respect to file size. You can simply ignore
+  (or remove) the `/buckets` volume mount if you are using S3.
+- Take note of volume mount sizes before bringing everything up, so that you don't run out of space.
+ 
