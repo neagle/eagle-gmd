@@ -29,7 +29,10 @@ Jwt: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#HTTPListener
-
+			gsl.#SpireListener & {
+				#context: context.SpireContext
+				#subjects: ["gmdata-gmdata"]
+			}
 			routes: {
 				"/": {
 					upstreams: {
@@ -47,14 +50,18 @@ Jwt: gsl.#Service & {
 		}
 	}
 
-        edge: {
-                edge_name: "edge"
-                routes: "/services/\(context.globals.namespace)/\(name)": {
-                        prefix_rewrite: "/"
-                        upstreams: (name): {
-                                gsl.#Upstream
-                                namespace: context.globals.namespace
-                        }
+    edge: {
+            edge_name: "edge"
+            routes: "/services/\(context.globals.namespace)/\(name)": {
+                    prefix_rewrite: "/"
+                    upstreams: (name): {
+                        gsl.#Upstream
+                        namespace: context.globals.namespace
+						gsl.#SpireUpstream & {
+							#context: context.SpireContext
+							#subjects: ["gmdata-edge"]
+						}                  
+					}
                 }
         }
 

@@ -55,6 +55,10 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "mongo"
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-gmdata"]
+				}
 			}
 		}
 		"egress-to-kafka": {
@@ -63,6 +67,10 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "kafka"
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-gmdata"]
+				}
 			}
 		}
 		"egress-to-zk": {
@@ -71,6 +79,10 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "zk"
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-gmdata"]
+				}
 			}
 		}
 		"egress-to-services": {
@@ -83,6 +95,10 @@ Gmdata: gsl.#Service & {
 						"jwt-security": {
 							namespace: context.globals.namespace
 							gsl.#Upstream
+							gsl.#SpireUpstream & {
+								#context: context.SpireContext
+								#subjects: ["gmdata-gmdata"]
+							}
 						}
 					}
 				}
