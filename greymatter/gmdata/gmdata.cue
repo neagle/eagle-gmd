@@ -27,7 +27,10 @@ Gmdata: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#HTTPListener
-
+			gsl.#SpireListener & {
+				#context: context.SpireContext
+				#subjects: ["gmdata-gmdata"]
+			}
 			routes: {
 				"/": {
 					upstreams: {
