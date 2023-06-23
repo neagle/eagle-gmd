@@ -15,7 +15,7 @@ Zk: gsl.#Service & {
 	name:                      "zk"
 	display_name:              "gmdata Zookeeper"
 	version:                   "v1.0.0"
-	description:               "EDIT ME"
+	description:               "help coordinate kafka connections"
 	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: true
