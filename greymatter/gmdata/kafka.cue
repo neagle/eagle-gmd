@@ -15,7 +15,7 @@ Kafka: gsl.#Service & {
 	name:                      "kafka"
 	display_name:              "gmdata Kafka"
 	version:                   "v1.0.0"
-	description:               "EDIT ME"
+	description:               "change notification for gmdata"
 	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: true
