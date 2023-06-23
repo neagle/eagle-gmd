@@ -15,7 +15,7 @@ Mongo: gsl.#Service & {
 	name:                      "mongo"
 	display_name:              "gmdata Mongo"
 	version:                   "v1.0.0"
-	description:               "EDIT ME"
+	description:               "gm-data's persistent mongodb data"
 	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: true
