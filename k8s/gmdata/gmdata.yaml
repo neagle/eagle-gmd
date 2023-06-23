@@ -23,8 +23,10 @@ spec:
         ports:
         - containerPort: 8181
         env:
-        - name: LESS_CHATTY_INFO
+        - name: CRASH_ON_ERROR
           value: "true"
+        - name: LESS_CHATTY_INFO
+          value: "false"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "127.0.0.1"
         - name: CLIENT_JWT_ENDPOINT_PORT
