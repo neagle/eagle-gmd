@@ -23,12 +23,12 @@ Gmdata: gsl.#Service & {
 	business_impact:           "high"
 	owner:                     "greymatter"
 	capability:                "data"
-        health_options: {
-          spire: gsl.#SpireUpstream & {
-            #context: context.SpireContext
-            #subjects: ["gmdata-gmdata"]
-          }
-        }
+	health_options: {
+		spire: gsl.#SpireUpstream & {
+			#context: context.SpireContext
+			#subjects: ["gmdata-gmdata"]
+		}
+	}
 	ingress: {
 		(name): {
 			gsl.#HTTPListener

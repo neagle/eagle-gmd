@@ -23,6 +23,12 @@ Kafka: gsl.#Service & {
 	business_impact:           "low"
 	owner:                     "gmdata"
 	capability:                ""
+	health_options: {
+		spire: gsl.#SpireUpstream & {
+			#context: context.SpireContext
+			#subjects: ["gmdata-kafka"]
+		}
+	}
 
 	// Kafka -> ingress to your container
 	ingress: {
@@ -30,7 +36,7 @@ Kafka: gsl.#Service & {
 			gsl.#TCPListener
 			gsl.#SpireListener & {
 				#context: context.SpireContext
-				#subjects: ["gmdata-gmdata"]
+				#subjects: ["gmdata-kafka"]
 			}
 			upstream: {
 				gsl.#Upstream
@@ -45,20 +51,20 @@ Kafka: gsl.#Service & {
 		}
 	}
 
-    egress: {
-            "egress-to-zk": {
-                    gsl.#TCPListener
-                    port: 2181
-                    upstream: {
-                        namespace: context.globals.namespace
-                        name:      "zk"
-						gsl.#SpireUpstream & {
-							#context: context.SpireContext
-							#subjects: ["gmdata-gmdata"]
-						}							
-                    }
-            }
-        }
+	egress: {
+		"egress-to-zk": {
+			gsl.#TCPListener
+			port: 2181
+			upstream: {
+				namespace: context.globals.namespace
+				name:      "zk"
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-gmdata"]
+				}
+			}
+		}
+	}
 
 	// Looking to make your tcp service accessible from the edge?
 	// You must open a new listener on the edge whose upstream name

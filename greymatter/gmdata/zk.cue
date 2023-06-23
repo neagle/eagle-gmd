@@ -23,12 +23,21 @@ Zk: gsl.#Service & {
 	business_impact:           "low"
 	owner:                     "gmdata"
 	capability:                ""
+	health_options: {
+		spire: gsl.#SpireUpstream & {
+			#context: context.SpireContext
+			#subjects: ["gmdata-zk"]
+		}
+	}
 
 	// Zk -> ingress to your container
 	ingress: {
 		(name): {
 			gsl.#TCPListener
-
+			gsl.#SpireListener & {
+				#context: context.SpireContext
+				#subjects: ["gmdata-zk", "gmdata-kafka"]
+			}
 			upstream: {
 				gsl.#Upstream
 				name: "local"
