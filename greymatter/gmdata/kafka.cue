@@ -36,7 +36,7 @@ Kafka: gsl.#Service & {
 			gsl.#TCPListener
 			gsl.#SpireListener & {
 				#context: context.SpireContext
-				#subjects: ["gmdata-kafka"]
+				#subjects: ["gmdata-gmdata","gmdata-zk"]
 			}
 			upstream: {
 				gsl.#Upstream
@@ -60,7 +60,7 @@ Kafka: gsl.#Service & {
 				name:      "zk"
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-gmdata"]
+					#subjects: ["gmdata-zk"]
 				}
 			}
 		}

@@ -26,7 +26,7 @@ Gmdata: gsl.#Service & {
 	health_options: {
 		spire: gsl.#SpireUpstream & {
 			#context: context.SpireContext
-			#subjects: ["gmdata-gmdata"]
+			#subjects: ["gmdata-edge"]
 		}
 	}
 	ingress: {
@@ -34,7 +34,7 @@ Gmdata: gsl.#Service & {
 			gsl.#HTTPListener
 			gsl.#SpireListener & {
 				#context: context.SpireContext
-				#subjects: ["gmdata-gmdata"]
+				#subjects: ["gmdata-edge"]
 			}
 			routes: {
 				"/": {

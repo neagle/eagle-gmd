@@ -27,7 +27,7 @@ Jwt: gsl.#Service & {
 	health_options: {
 		spire: gsl.#SpireUpstream & {
 			#context: context.SpireContext
-			#subjects: ["gmdata-jwt"]
+			#subjects: ["gmdata-edge"]
 		}
 	}
 
@@ -37,7 +37,7 @@ Jwt: gsl.#Service & {
 			gsl.#HTTPListener
 			gsl.#SpireListener & {
 				#context: context.SpireContext
-				#subjects: ["gmdata-jwt"]
+				#subjects: ["gmdata-gmdata"]
 			}
 			routes: {
 				"/": {
