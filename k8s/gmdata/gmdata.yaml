@@ -15,7 +15,6 @@ spec:
       labels:
         app: gmdata
     spec:
-      replicas: 2
       imagePullSecrets:
       - name: greymatter-image-pull
       containers:
