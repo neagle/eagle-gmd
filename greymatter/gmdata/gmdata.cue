@@ -26,7 +26,7 @@ Gmdata: gsl.#Service & {
 	health_options: {
 		spire: gsl.#SpireUpstream & {
 			#context: context.SpireContext
-			#subjects: ["gmdata-edge"]
+			#subjects: ["gmdata-mongo", "gmdata-kafka", "gmdata-zk", "gmdata-jwt-security"]
 		}
 	}
 	ingress: {
@@ -123,7 +123,7 @@ Gmdata: gsl.#Service & {
 				namespace: context.globals.namespace
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-edge"]
+					#subjects: ["gmdata-gmdata"]
 				}
 			}
 		}
