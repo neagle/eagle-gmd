@@ -37,7 +37,7 @@ Jwt: gsl.#Service & {
 			gsl.#HTTPListener
 			gsl.#SpireListener & {
 				#context: context.SpireContext
-				#subjects: ["gmdata-gmdata"]
+				#subjects: ["gmdata-edge","gmdata-gmdata"]
 			}
 			routes: {
 				"/": {
@@ -65,7 +65,7 @@ Jwt: gsl.#Service & {
 				namespace: context.globals.namespace
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-edge"]
+					#subjects: ["gmdata-edge","gmdata-gmdata"]
 				}
 			}
 		}

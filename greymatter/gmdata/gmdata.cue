@@ -62,7 +62,7 @@ Gmdata: gsl.#Service & {
 				name:      "mongo"
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-gmdata"]
+					#subjects: ["gmdata-mongo"]
 				}
 			}
 		}
@@ -74,7 +74,7 @@ Gmdata: gsl.#Service & {
 				name:      "kafka"
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-gmdata"]
+					#subjects: ["gmdata-kafka"]
 				}
 			}
 		}
@@ -86,7 +86,7 @@ Gmdata: gsl.#Service & {
 				name:      "zk"
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-gmdata"]
+					#subjects: ["gmdata-zk"]
 				}
 			}
 		}
@@ -102,7 +102,7 @@ Gmdata: gsl.#Service & {
 							gsl.#Upstream
 							gsl.#SpireUpstream & {
 								#context: context.SpireContext
-								#subjects: ["gmdata-gmdata"]
+								#subjects: ["gmdata-jwt-security"]
 							}
 						}
 					}
