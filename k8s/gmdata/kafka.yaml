@@ -35,7 +35,13 @@ spec:
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
+        - name: spire-socket
+          mountPath: /run/spire/socket
       volumes:
       - name: kafka-storage
         persistentVolumeClaim:
           claimName: kafka-pvc
+      - name: spire-socket
+        hostPath:
+          path: /run/spire/socket
+          type: DirectoryOrCreate             
