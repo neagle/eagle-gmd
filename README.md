@@ -29,4 +29,12 @@ for a user into your web browser. They all have password `greymatter`.
   For real deployments, you want this so that storage is limitless with respect to file size. You can simply ignore
   (or remove) the `/buckets` volume mount if you are using S3.
 - Take note of volume mount sizes before bringing everything up, so that you don't run out of space.
- 
+
+When the service is up and running, and you can see it in the browser, run a test to upload files in your ~/Downloads dir:
+
+> read ./tutorial/README.md to get started on using gmdata API
+
+```
+cd tutorial
+./uploadsExample.py
+``` 
