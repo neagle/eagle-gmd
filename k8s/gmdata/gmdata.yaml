@@ -23,6 +23,8 @@ spec:
         ports:
         - containerPort: 8181
         env:
+        - name: DONT_PANIC
+          value: "false"
         - name: CRASH_ON_ERROR
           value: "true"
         - name: LESS_CHATTY_INFO
