@@ -72,12 +72,12 @@ spec:
           value: "127.0.0.1:27017"
         - name: MONGODB
           value: "chili"
-        - name: KAFKA_PEERS
-          value: "127.0.0.1:9092"
-        - name: KAFKA_TOPIC_READ
-          value: "gmdatax-audit"
-        - name: KAFKA_TOPIC_UPDATE
-          value: "gmdatax-replicationlog"
+            #- name: KAFKA_PEERS
+            #  value: "127.0.0.1:9092"
+            #- name: KAFKA_TOPIC_READ
+            #  value: "gmdatax-audit"
+            #- name: KAFKA_TOPIC_UPDATE
+            #  value: "gmdatax-replicationlog"
         volumeMounts:
         - name: gmdata-storage
           mountPath: /buckets
