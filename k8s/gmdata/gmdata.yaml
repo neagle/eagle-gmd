@@ -6,7 +6,7 @@ metadata:
   annotations:
     "greymatter.io/inject-sidecar-to": "8181"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: gmdata
