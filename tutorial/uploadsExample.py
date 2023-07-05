@@ -6,6 +6,7 @@ import json
 import random
 import sys
 from requests_toolbelt.multipart.encoder import MultipartEncoder
+import asyncio
 
 ## required:
 # pip install requests_toolbelt
@@ -20,10 +21,12 @@ gmdataUrl = proxy + "/services/gmdata/gmdata"
 rootDir = "/world"
 userSubdirs = {}
 
+def get_script_path():
+    return os.path.dirname(os.path.realpath(sys.argv[0]))+"/"
 
 def setup():
   global usersJson
-  f = open("../certs/users.json")
+  f = open(get_script_path()+"../certs/users.json")
   usersJson = json.load(f)
   f.close()
 
@@ -63,8 +66,10 @@ def upload(files):
   fName = random.choice(files)
   maybePushDir(userdn)
   maybePopDir(userdn)
-  doUpload(fName, dirsOf(userdn), homeDirName, userdn, identity, identityPassword)
-
+  thePath = pathOf(userdn)
+  c = doUpload(fName, thePath, homeDirName, userdn, identity, identityPassword)
+  asyncio.run(c)
+  
 # You can set an openpolicyagent permission on an object, like this
 # this makes it ReadOnly access for the user with this email
 def policyAllCanReadEmailOwns(email):
@@ -94,11 +99,11 @@ def pathOf(userdn):
 # - make a metadata object in multipart-mime to describe the upload
 # - supply the blob after the metadata object
 #
-def doUpload(fName, dirs, email, userdn, identity, identityPassword):
+async def doUpload(fName, thePath, email, userdn, identity, identityPassword):
     global rootDir
     global downloadsdir
     global gmdataUrl
-    into = ("%s/%s%s" % (rootDir, email, pathOf(userdn)))
+    into = ("%s/%s%s" % (rootDir, email, thePath))
     print("uploading for %s: %s/%s" % (userdn,into,fName))
     # You need enough metadata to say that you want an upsert of a file, into a directory. It needs a name, and can take a default permission
     metadata = [{
@@ -129,9 +134,12 @@ def doUpload(fName, dirs, email, userdn, identity, identityPassword):
           "content-type": md.content_type,
         },
         # this is an mTLS connection to the server... we trust the CA
-        verify="../certs/gmdata_ca_cert.pem",
+        verify=get_script_path()+"../certs/gmdata_ca_cert.pem",
         # and we upload as our own user, using pem format
-        cert=("../certs/gmdata_%s_cert.pem" % identity,"../certs/gmdata_%s_key.pem" % identity),
+        cert=(
+                get_script_path()+"../certs/gmdata_%s_cert.pem" % identity,
+                get_script_path()+"../certs/gmdata_%s_key.pem" % identity
+              ),
       )
       if result.status_code != 200:
         print("FAIL to write %s/%s by %s" % (into,fName,userdn))

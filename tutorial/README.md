@@ -34,3 +34,12 @@ Once you have some data actually in gmdata, run some examples of simple shell sc
 ```
 ./listingExample.sh
 ```
+
+## Example of running the whole stack
+
+- I assume that `eagle-core` and `eagle-gmd` are in the same directory, and the required JFROG env vars are set (the script will complain and tell you what to set if you have not done so)
+- Bring up core, bring up tenant, then run script against tenant
+
+```
+(cd ../eagle-core && ./scripts/setup ) && ( cd ../eagle-gmd/ && ./scripts/setup ) && ( cd ../eagle-gmd/tutorial/ && sleep 300 && ./uploadsExample.py )
+```

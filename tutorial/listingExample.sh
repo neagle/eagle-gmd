@@ -23,6 +23,9 @@ gmdataCommand() {
 
 # Examplesa that assume that you ran ./upladsExample.py for a bit to populate gmdata
 
+(
+# we are in the directory of this script
+cd "${0%/*}"
 
 echo "Directory listing, for ALL users"
 gmdataCommand neagle list "/world" | jq
@@ -38,3 +41,4 @@ echo "https://localhost:10809/services/gmdata/gmdata/show/${oid}"
 ## this is a similar variation that gets the file without classification banners around it
 #echo "https://localhost:10809/services/gmdata/gmdata/stream/${oid}"
 
+)
