@@ -27,20 +27,6 @@ Edge: gsl.#Edge & {
         ingress: {
                 (name): {
                         gsl.#HTTPListener
-                        gsl.#MTLSListener & {
-                                ssl_config: {
-                                        cert_key_pairs: [
-                                                {
-                                                        certificate_path: "/etc/proxy/tls/edge/server.crt"
-                                                        key_path:         "/etc/proxy/tls/edge/server.key"
-                                                },
-                                        ]
-                                        trust_file: "/etc/proxy/tls/edge/ca.crt"
-                                }
-                        }
-                        filters: [
-                                gsl.#InheadersFilter,
-                        ]
                         port: 10809
                 }
 
