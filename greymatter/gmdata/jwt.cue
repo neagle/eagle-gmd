@@ -24,21 +24,11 @@ Jwt: gsl.#Service & {
 	business_impact:           "high"
 	owner:                     "gmdata"
 	capability:                ""
-	health_options: {
-		spire: gsl.#SpireUpstream & {
-			#context: context.SpireContext
-			#subjects: ["gmdata-edge"]
-		}
-	}
 
 	// Jwt -> ingress to your container
 	ingress: {
 		(name): {
 			gsl.#HTTPListener
-			gsl.#SpireListener & {
-				#context: context.SpireContext
-				#subjects: ["gmdata-edge","gmdata-gmdata"]
-			}
 			routes: {
 				"/": {
 					upstreams: {
@@ -63,10 +53,6 @@ Jwt: gsl.#Service & {
 			upstreams: (name): {
 				gsl.#Upstream
 				namespace: context.globals.namespace
-				gsl.#SpireUpstream & {
-					#context: context.SpireContext
-					#subjects: ["gmdata-edge","gmdata-gmdata"]
-				}
 			}
 		}
 	}
