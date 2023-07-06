@@ -24,12 +24,7 @@ Edge: gsl.#Edge & {
 	owner:           "Nate Eagle"
 	capability:      ""
 
-        health_options: {
-                spire: gsl.#SpireUpstream & {
-                        #context: context.SpireContext
-                        #subjects: ["gmdata-gmdata"]
-                }
-        }
+
         ingress: {
                 (name): {
                         gsl.#HTTPListener
@@ -48,11 +43,10 @@ Edge: gsl.#Edge & {
                                 gsl.#InheadersFilter,
                         ]
                         port: 10809
-			gsl.#SpireListener & {
-				#context: context.SpireContext
-				#subjects: ["gmdata-edge"]
-			}
-
+                        gsl.#SpireListener & {
+                               #context: context.SpireContext
+                               #subjects: ["gmdata-edge"]
+                        }
                 }
 
         }
