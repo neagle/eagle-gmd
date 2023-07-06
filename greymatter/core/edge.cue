@@ -45,7 +45,7 @@ Edge: gsl.#Edge & {
                         port: 10809
                         gsl.#SpireListener & {
                                #context: context.SpireContext
-                               #subjects: ["gmdata-edge"]
+                               #subjects: ["gmdata-data"]
                         }
                 }
 
