@@ -24,13 +24,7 @@ spec:
         volumeMounts:
         - name: zk-storage
           mountPath: /opt/zookeeper-3.4.13/data
-        - name: spire-socket
-          mountPath: /run/spire/socket
       volumes:
       - name: zk-storage
         persistentVolumeClaim:
           claimName: zk-pvc
-      - name: spire-socket
-        hostPath:
-          path: /run/spire/socket
-          type: DirectoryOrCreate  
