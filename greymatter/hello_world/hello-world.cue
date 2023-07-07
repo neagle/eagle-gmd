@@ -28,7 +28,10 @@ Hello_World: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#TCPListener
-
+			gsl.#SpireListener & {
+				#context: context.SpireContext
+				#subjects: ["gmdata-gmdata","gmdata-edge"]
+			}	
 			upstream: {
 				gsl.#Upstream
 				name: "local"
