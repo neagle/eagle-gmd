@@ -24,12 +24,6 @@ Edge: gsl.#Edge & {
 	owner:           "Nate Eagle"
 	capability:      ""
 
-        health_options: {
-                spire: gsl.#SpireUpstream & {
-                        #context: context.SpireContext
-                        #subjects: ["gmdata-gmdata"]
-                }
-        }
         ingress: {
                 (name): {
                         gsl.#HTTPListener

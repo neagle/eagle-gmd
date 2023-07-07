@@ -28,10 +28,6 @@ Zk: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#TCPListener
-			gsl.#SpireListener & {
-				#context: context.SpireContext
-				#subjects: ["gmdata-kafka"]
-			}
 			upstream: {
 				gsl.#Upstream
 				name: "local"
