@@ -106,3 +106,16 @@ When the service is up and running, and you can see it in the browser, run a tes
 cd tutorial
 ./uploadsExample.py
 ``` 
+
+## TLDR
+
+Shortcut to launch it and have it being tested before you come back
+
+```
+(cd ../eagle-core && ./scripts/setup) && (cd ../eagle-gmd && ./scripts/setup && sleep 420 && cd tutorial && ./uploadsExample.py)
+```
+
+## TODO
+
+- Spire, especially against JWT service doesn't seem right, in spite of everything functioning
+- The tutorial load test seems somewhat slow. We should eventually get at least a few hundred files fully uploaded and indexed per minute.
