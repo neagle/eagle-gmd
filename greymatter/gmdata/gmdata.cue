@@ -123,7 +123,7 @@ Gmdata: gsl.#Service & {
 				namespace: context.globals.namespace
 				gsl.#SpireUpstream & {
 					#context: context.SpireContext
-					#subjects: ["gmdata-gmdata"]
+					#subjects: ["gmdata-edge"]
 				}
 			}
 		}
