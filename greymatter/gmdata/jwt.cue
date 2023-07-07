@@ -29,10 +29,10 @@ Jwt: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#HTTPListener
-				gsl.#SpireListener & {
-				#context: context.SpireContext
-				#subjects: ["gmdata-gmdata","gmdata-edge"]
-			}		
+			//gsl.#SpireListener & {
+			//	#context: context.SpireContext
+			//	#subjects: ["gmdata-gmdata","gmdata-edge"]
+			//}		
 			routes: {
 				"/": {
 					upstreams: {
