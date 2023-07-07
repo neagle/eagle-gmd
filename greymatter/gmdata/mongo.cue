@@ -23,21 +23,11 @@ Mongo: gsl.#Service & {
 	business_impact:           "low"
 	owner:                     "gmdata"
 	capability:                ""
-	health_options: {
-		spire: gsl.#SpireUpstream & {
-			#context: context.SpireContext
-			#subjects: ["gmdata-mongo"]
-		}
-	}
 
 	// Mongo -> ingress to your container
 	ingress: {
 		(name): {
 			gsl.#TCPListener
-			gsl.#SpireListener & {
-				#context: context.SpireContext
-				#subjects: ["gmdata-gmdata"]
-			}
 			upstream: {
 				gsl.#Upstream
 				name: "local"
