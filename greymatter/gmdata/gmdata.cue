@@ -54,10 +54,6 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "mongo"
-			    gsl.#SpireUpstream & {
-				    #context: context.SpireContext
-				    #subjects: ["gmdata-mongo"]
-			    }
 			}
 		}
 		"egress-to-kafka": {
@@ -86,6 +82,10 @@ Gmdata: gsl.#Service & {
 						"jwt-security": {
 							namespace: context.globals.namespace
 							gsl.#Upstream
+			                gsl.#SpireUpstream & {
+				            #context: context.SpireContext
+				            #subjects: ["gmdata-edge"]
+			              }
 						}
 					}
 				}
