@@ -28,6 +28,10 @@ Kafka: gsl.#Service & {
 	ingress: {
 		(name): {
 			gsl.#TCPListener
+			gsl.#SpireListener & {
+				#context: context.SpireContext
+				#subjects: ["gmdata-gmdata"]
+			}
 			upstream: {
 				gsl.#Upstream
 				name: "local"
