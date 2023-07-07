@@ -23,19 +23,9 @@ Gmdata: gsl.#Service & {
 	business_impact:           "high"
 	owner:                     "greymatter"
 	capability:                "data"
-	health_options: {
-		spire: gsl.#SpireUpstream & {
-			#context: context.SpireContext
-			#subjects: ["gmdata-mongo", "gmdata-kafka", "gmdata-zk", "gmdata-jwt-security"]
-		}
-	}
 	ingress: {
 		(name): {
 			gsl.#HTTPListener
-			gsl.#SpireListener & {
-				#context: context.SpireContext
-				#subjects: ["gmdata-edge"]
-			}
 			routes: {
 				"/": {
 					upstreams: {
@@ -60,10 +50,6 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "mongo"
-				gsl.#SpireUpstream & {
-					#context: context.SpireContext
-					#subjects: ["gmdata-mongo"]
-				}
 			}
 		}
 		"egress-to-kafka": {
@@ -72,10 +58,6 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "kafka"
-				gsl.#SpireUpstream & {
-					#context: context.SpireContext
-					#subjects: ["gmdata-kafka"]
-				}
 			}
 		}
 		"egress-to-zk": {
@@ -84,10 +66,6 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "zk"
-				gsl.#SpireUpstream & {
-					#context: context.SpireContext
-					#subjects: ["gmdata-zk"]
-				}
 			}
 		}
 		"egress-to-services": {
@@ -100,10 +78,6 @@ Gmdata: gsl.#Service & {
 						"jwt-security": {
 							namespace: context.globals.namespace
 							gsl.#Upstream
-							gsl.#SpireUpstream & {
-								#context: context.SpireContext
-								#subjects: ["gmdata-jwt-security"]
-							}
 						}
 					}
 				}
@@ -121,10 +95,6 @@ Gmdata: gsl.#Service & {
 			upstreams: (name): {
 				gsl.#Upstream
 				namespace: context.globals.namespace
-				gsl.#SpireUpstream & {
-					#context: context.SpireContext
-					#subjects: ["gmdata-edge"]
-				}
 			}
 		}
 	}
