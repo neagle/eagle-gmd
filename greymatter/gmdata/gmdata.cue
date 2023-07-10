@@ -62,6 +62,10 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "kafka"
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-kafka"]
+				}
 			}
 		}
 		"egress-to-zk": {
@@ -70,6 +74,10 @@ Gmdata: gsl.#Service & {
 			upstream: {
 				namespace: context.globals.namespace
 				name:      "zk"
+				gsl.#SpireUpstream & {
+					#context: context.SpireContext
+					#subjects: ["gmdata-zk"]
+				}
 			}
 		}
 		"egress-to-services": {
