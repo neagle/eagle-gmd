@@ -16,8 +16,8 @@ Hello_World: gsl.#Service & {
 	display_name:              "Eagle GMD Hello World"
 	version:                   "v1.0.0"
 	description:               "The simplest service around."
-	api_endpoint:              "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
-	api_spec_endpoint:         "http://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
+	api_endpoint:              "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
+	api_spec_endpoint:         "https://\(context.globals.edge_host)/services/\(context.globals.namespace)/\(name)/"
 	enable_historical_metrics: false
 	enable_instance_metrics:   false
 	business_impact:           "low"
