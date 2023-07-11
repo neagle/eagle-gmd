@@ -81,14 +81,8 @@ spec:
         volumeMounts:
         - name: gmdata-storage
           mountPath: /buckets
-        - name: spire-socket
-          mountPath: /run/spire/socket
       volumes:
       - name: gmdata-storage
         persistentVolumeClaim:
           claimName: gmdata-pvc
-      - name: spire-socket
-        hostPath:
-          path: /run/spire/socket
-          type: DirectoryOrCreate
            
