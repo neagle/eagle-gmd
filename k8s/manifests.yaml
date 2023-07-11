@@ -56,8 +56,6 @@ spec:
           - mountPath: /etc/proxy/tls/edge
             name: edge-certs
             readOnly: true
-          - mountPath: /run/spire/socket
-            name: spire-socket
       volumes:
       - name: edge-certs
         secret:
@@ -81,10 +79,6 @@ spec:
             path: server.key
           - key: ca.crt
             path: ca.crt
-      - name: spire-socket
-        hostPath:
-          path: /run/spire/socket
-          type: DirectoryOrCreate
       imagePullSecrets:
       - name: greymatter-image-pull
 

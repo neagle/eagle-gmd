@@ -48,8 +48,6 @@ spec:
         - mountPath: /gm-jwt-security/certs
           name: jwt-keys
           readOnly: true
-        - name: spire-socket
-          mountPath: /run/spire/socket
       volumes:
       - name: users-json
         configMap:
@@ -69,8 +67,4 @@ spec:
             path: jwtES512.key.pub
           - key:  jwtAPI.key.b64
             path: jwtAPI.key.b64
-      - name: spire-socket
-        hostPath:
-          path: /run/spire/socket
-          type: DirectoryOrCreate            
 
