@@ -24,13 +24,7 @@ spec:
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
-        - name: spire-socket
-          mountPath: /run/spire/socket
       volumes:
       - name: mongo-storage
         persistentVolumeClaim:
           claimName: mongo-pvc
-      - name: spire-socket
-        hostPath:
-          path: /run/spire/socket
-          type: DirectoryOrCreate  
